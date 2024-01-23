@@ -1,15 +1,62 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-    "./node_modules/flowbite/**/*.js"
-  ],
-  theme: {
-    extend: {},
-  },
-  plugins: [
-    require('flowbite/plugin')
-  ],
-}
-
+    content: [
+        "./index.html",
+        "./src/**/*.{js,ts,jsx,tsx}",
+        "./node_modules/flowbite/**/*.js",
+    ],
+    theme: {
+        extend: {
+            colors: {
+                "primary-100": "#F5CFE9",
+                "primary-200": "#EBA2DA",
+                "primary-300": "#C569B7",
+                "primary-400": "#8C3A87",
+                "primary-500": "#3F0E40",
+                "primary-600": "#320A37",
+                "primary-700": "#26072E",
+                "primary-800": "#1C0425",
+                "primary-900": "#14021E",
+                "success-100": "#F1F9C9",
+                "success-200": "#E0F397",
+                "success-300": "#BFDD5E",
+                "success-400": "#97BB35",
+                "success-500": "#668E07",
+                "success-600": "#537A05",
+                "success-700": "#426603",
+                "success-800": "#335202",
+                "success-900": "#284401",
+                "info-100": "#C8FBF8",
+                "info-200": "#94F5F7",
+                "info-300": "#5CDAE7",
+                "info-400": "#33B5CF",
+                "info-500": "#0086AF",
+                "info-600": "#006896",
+                "info-700": "#004E7D",
+                "info-800": "#003765",
+                "info-900": "#002853",
+                "warning-100": "#F9E8C8",
+                "warning-200": "#F4CD94",
+                "warning-300": "#DFA35C",
+                "warning-400": "#C07732",
+                "warning-500": "#964203",
+                "warning-600": "#813102",
+                "warning-700": "#6C2301",
+                "warning-800": "#571700",
+                "warning-900": "#480F00",
+                "danger-100": "#FADFD1",
+                "danger-200": "#F6B8A4",
+                "danger-300": "#E58573",
+                "danger-400": "#CC564D",
+                "danger-500": "#AA1D1F",
+                "danger-600": "#921521",
+                "danger-700": "#7A0E22",
+                "danger-800": "#620921",
+                "danger-900": "#510521",
+                secondary: "#2397D7",
+                "secondary-500": "#2397D7",
+            },
+        },
+    },
+    plugins: [require("flowbite/plugin")],
+};
