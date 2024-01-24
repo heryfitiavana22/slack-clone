@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,7 +8,54 @@ datasource db {
 }
 
 model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String
+  id               Int           @id @default(autoincrement())
+  email            String        @unique
+  name             String
+  workspaces       Workspace[]
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+  chatChannel      ChatChannel[]
+  sentMessages     ChatPrivate[] @relation("SentMessages")
+  receivedMessages ChatPrivate[] @relation("ReceivedMessages")
+}
+
+model Workspace {
+  id        Int       @id @default(autoincrement())
+  name      String    @unique
+  channels  Channel[]
+  users     User[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Channel {
+  id          Int           @id @default(autoincrement())
+  name        String        @unique
+  workspace   Workspace     @relation(fields: [workspaceId], references: [id])
+  workspaceId Int
+  ChatChannel ChatChannel[]
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+}
+
+model ChatChannel {
+  id        Int      @id @default(autoincrement())
+  content   String
+  sender    User     @relation(fields: [senderId], references: [id])
+  senderId  Int
+  channel   Channel  @relation(fields: [channelId], references: [id])
+  channelId Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ChatPrivate {
+  id         Int      @id @default(autoincrement())
+  content    String
+  sender     User     @relation("SentMessages", fields: [senderId], references: [id])
+  senderId   Int
+  receiver   User     @relation("ReceivedMessages", fields: [receiverId], references: [id])
+  receiverId Int
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }
