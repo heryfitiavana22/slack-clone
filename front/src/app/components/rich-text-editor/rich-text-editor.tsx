@@ -38,7 +38,7 @@ export function RichTextEditor({
                 onFocus={() => setFocus(true)}
             />
             <div className="flex justify-end w-full">
-                <Button variant="success" size="sm">
+                <Button variant="primary" size="sm">
                     <Send />
                 </Button>
             </div>

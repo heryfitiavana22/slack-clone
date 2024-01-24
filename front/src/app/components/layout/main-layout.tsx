@@ -36,8 +36,10 @@ export function MainLayout({}: MainLayoutProps) {
             >
                 <Sidebar />
             </aside>
-            <div className="py-4 sm:ml-64">
-                <Outlet />
+            <div className="pt-11 h-screen sm:ml-64">
+                <div className="py-4 h-full">
+                    <Outlet />
+                </div>
             </div>
         </>
     );
