@@ -1,0 +1,31 @@
+type Workspace {
+  id: Int!
+  name: String!
+  users: [User]
+  createdAt: String!
+  updatedAt: String!
+}
+
+input CreateWorkspaceInput {
+  name: String!
+}
+
+input UpdateWorkspaceInput {
+  id: Int!
+  name: String
+}
+
+input FindManyWorkspaceInput {
+  name: String
+}
+
+type Query {
+  workspaces(findManyWorkspaceInput: FindManyWorkspaceInput): [Workspace]!
+  workspace(id: Int!): Workspace
+}
+
+type Mutation {
+  createWorkspace(createWorkspaceInput: CreateWorkspaceInput!): Workspace!
+  updateWorkspace(updateWorkspaceInput: UpdateWorkspaceInput!): Workspace!
+  removeWorkspace(id: Int!): Workspace
+}

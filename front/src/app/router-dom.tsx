@@ -1,4 +1,3 @@
-import { PropsWithChildren } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Channel } from "./channel/channel";
 import { Login } from "./auth/login/login";
@@ -16,8 +15,6 @@ const router = createBrowserRouter([
     },
 ]);
 
-export function RouterDom({}: RouterDomProps) {
+export function RouterDom() {
     return <RouterProvider router={router} />;
 }
-
-type RouterDomProps = PropsWithChildren<{}>;

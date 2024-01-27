@@ -1,0 +1,24 @@
+type Channel {
+  # Example field (placeholder)
+  exampleField: Int
+}
+
+input CreateChannelInput {
+  # Example field (placeholder)
+  exampleField: Int
+}
+
+input UpdateChannelInput {
+  id: Int!
+}
+
+type Query {
+  channels: [Channel]!
+  channel(id: Int!): Channel
+}
+
+type Mutation {
+  createChannel(createChannelInput: CreateChannelInput!): Channel!
+  updateChannel(updateChannelInput: UpdateChannelInput!): Channel!
+  removeChannel(id: Int!): Channel
+}
