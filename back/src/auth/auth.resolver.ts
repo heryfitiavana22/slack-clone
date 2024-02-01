@@ -21,7 +21,7 @@ export class AuthResolver {
     return this.authService.login(user);
   }
 
-  @Query('profil')
+  @Query('me')
   findAll(@CurrentUser() user: UserPayload) {
     console.log('user');
     console.log(user);

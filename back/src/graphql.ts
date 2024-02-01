@@ -8,6 +8,11 @@
 /* tslint:disable */
 /* eslint-disable */
 
+export class LoginInput {
+    email: string;
+    password: string;
+}
+
 export class CreateChannelInput {
     exampleField?: Nullable<number>;
 }
@@ -45,18 +50,24 @@ export class FindManyWorkspaceInput {
     name?: Nullable<string>;
 }
 
-export class LoginInput {
-    email: string;
-    password: string;
-}
-
-export class Login {
-    username: string;
-    password: string;
-}
-
 export class Token {
     access_token: string;
+}
+
+export abstract class IQuery {
+    abstract me(): Nullable<User> | Promise<Nullable<User>>;
+
+    abstract channels(): Nullable<Channel>[] | Promise<Nullable<Channel>[]>;
+
+    abstract channel(id: number): Nullable<Channel> | Promise<Nullable<Channel>>;
+
+    abstract users(findManyUserInput?: Nullable<FindManyUserInput>): Nullable<User>[] | Promise<Nullable<User>[]>;
+
+    abstract user(id: number): Nullable<User> | Promise<Nullable<User>>;
+
+    abstract workspaces(findManyWorkspaceInput?: Nullable<FindManyWorkspaceInput>): Nullable<Workspace>[] | Promise<Nullable<Workspace>[]>;
+
+    abstract workspace(id: number): Nullable<Workspace> | Promise<Nullable<Workspace>>;
 }
 
 export abstract class IMutation {
@@ -83,22 +94,6 @@ export abstract class IMutation {
 
 export class Channel {
     exampleField?: Nullable<number>;
-}
-
-export abstract class IQuery {
-    abstract channels(): Nullable<Channel>[] | Promise<Nullable<Channel>[]>;
-
-    abstract channel(id: number): Nullable<Channel> | Promise<Nullable<Channel>>;
-
-    abstract users(findManyUserInput?: Nullable<FindManyUserInput>): Nullable<User>[] | Promise<Nullable<User>[]>;
-
-    abstract user(id: number): Nullable<User> | Promise<Nullable<User>>;
-
-    abstract workspaces(findManyWorkspaceInput?: Nullable<FindManyWorkspaceInput>): Nullable<Workspace>[] | Promise<Nullable<Workspace>[]>;
-
-    abstract workspace(id: number): Nullable<Workspace> | Promise<Nullable<Workspace>>;
-
-    abstract profil(): Nullable<User> | Promise<Nullable<User>>;
 }
 
 export class User {

@@ -1,8 +1,9 @@
 import { PropsWithChildren } from "react";
+import { GuestGuard } from "src/app/components/guard/guest-guard";
 
 export function Login({}: LoginProps) {
     return (
-        <>
+        <GuestGuard>
             <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                     <img
@@ -86,7 +87,7 @@ export function Login({}: LoginProps) {
                     </p>
                 </div>
             </div>
-        </>
+        </GuestGuard>
     );
 }
 

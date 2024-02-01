@@ -2,10 +2,11 @@ import { PropsWithChildren } from "react";
 import { Outlet } from "react-router-dom";
 import { Sidebar } from "../sidebar/sidebar";
 import { Header } from "../header/header";
+import { AuthenticatedGuard } from "../guard/authenticated-guard";
 
 export function MainLayout({}: MainLayoutProps) {
     return (
-        <>
+        <AuthenticatedGuard>
             <Header />
             <button
                 data-drawer-target="sidebar-multi-level-sidebar"
@@ -41,7 +42,7 @@ export function MainLayout({}: MainLayoutProps) {
                     <Outlet />
                 </div>
             </div>
-        </>
+        </AuthenticatedGuard>
     );
 }
 
