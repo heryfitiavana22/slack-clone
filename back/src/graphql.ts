@@ -1,3 +1,4 @@
+
 /*
  * -------------------------------------------------------
  * THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
@@ -8,110 +9,110 @@
 /* eslint-disable */
 
 export class CreateChannelInput {
-  exampleField?: Nullable<number>;
+    exampleField?: Nullable<number>;
 }
 
 export class UpdateChannelInput {
-  id: number;
+    id: number;
 }
 
 export class CreateUserInput {
-  name: string;
-  email: string;
+    name: string;
+    email: string;
 }
 
 export class UpdateUserInput {
-  id: number;
-  name?: Nullable<string>;
-  email?: Nullable<string>;
+    id: number;
+    name?: Nullable<string>;
+    email?: Nullable<string>;
 }
 
 export class FindManyUserInput {
-  name?: Nullable<string>;
-  email?: Nullable<string>;
+    name?: Nullable<string>;
+    email?: Nullable<string>;
 }
 
 export class CreateWorkspaceInput {
-  name: string;
+    name: string;
 }
 
 export class UpdateWorkspaceInput {
-  id: number;
-  name?: Nullable<string>;
+    id: number;
+    name?: Nullable<string>;
 }
 
 export class FindManyWorkspaceInput {
-  name?: Nullable<string>;
+    name?: Nullable<string>;
 }
 
-export class Channel {
-  exampleField?: Nullable<number>;
+export class LoginInput {
+    email: string;
+    password: string;
 }
 
-export abstract class IQuery {
-  abstract channels(): Nullable<Channel>[] | Promise<Nullable<Channel>[]>;
+export class Login {
+    username: string;
+    password: string;
+}
 
-  abstract channel(id: number): Nullable<Channel> | Promise<Nullable<Channel>>;
-
-  abstract users(
-    findManyUserInput?: Nullable<FindManyUserInput>,
-  ): Nullable<User>[] | Promise<Nullable<User>[]>;
-
-  abstract user(id: number): Nullable<User> | Promise<Nullable<User>>;
-
-  abstract workspaces(
-    findManyWorkspaceInput?: Nullable<FindManyWorkspaceInput>,
-  ): Nullable<Workspace>[] | Promise<Nullable<Workspace>[]>;
-
-  abstract workspace(
-    id: number,
-  ): Nullable<Workspace> | Promise<Nullable<Workspace>>;
+export class Token {
+    access_token: string;
 }
 
 export abstract class IMutation {
-  abstract createChannel(
-    createChannelInput: CreateChannelInput,
-  ): Channel | Promise<Channel>;
+    abstract login(loginInput: LoginInput): Token | Promise<Token>;
 
-  abstract updateChannel(
-    updateChannelInput: UpdateChannelInput,
-  ): Channel | Promise<Channel>;
+    abstract createChannel(createChannelInput: CreateChannelInput): Channel | Promise<Channel>;
 
-  abstract removeChannel(
-    id: number,
-  ): Nullable<Channel> | Promise<Nullable<Channel>>;
+    abstract updateChannel(updateChannelInput: UpdateChannelInput): Channel | Promise<Channel>;
 
-  abstract createUser(createUserInput: CreateUserInput): User | Promise<User>;
+    abstract removeChannel(id: number): Nullable<Channel> | Promise<Nullable<Channel>>;
 
-  abstract updateUser(updateUserInput: UpdateUserInput): User | Promise<User>;
+    abstract createUser(createUserInput: CreateUserInput): User | Promise<User>;
 
-  abstract removeUser(id: number): Nullable<User> | Promise<Nullable<User>>;
+    abstract updateUser(updateUserInput: UpdateUserInput): User | Promise<User>;
 
-  abstract createWorkspace(
-    createWorkspaceInput: CreateWorkspaceInput,
-  ): Workspace | Promise<Workspace>;
+    abstract removeUser(id: number): Nullable<User> | Promise<Nullable<User>>;
 
-  abstract updateWorkspace(
-    updateWorkspaceInput: UpdateWorkspaceInput,
-  ): Workspace | Promise<Workspace>;
+    abstract createWorkspace(createWorkspaceInput: CreateWorkspaceInput): Workspace | Promise<Workspace>;
 
-  abstract removeWorkspace(
-    id: number,
-  ): Nullable<Workspace> | Promise<Nullable<Workspace>>;
+    abstract updateWorkspace(updateWorkspaceInput: UpdateWorkspaceInput): Workspace | Promise<Workspace>;
+
+    abstract removeWorkspace(id: number): Nullable<Workspace> | Promise<Nullable<Workspace>>;
+}
+
+export class Channel {
+    exampleField?: Nullable<number>;
+}
+
+export abstract class IQuery {
+    abstract channels(): Nullable<Channel>[] | Promise<Nullable<Channel>[]>;
+
+    abstract channel(id: number): Nullable<Channel> | Promise<Nullable<Channel>>;
+
+    abstract users(findManyUserInput?: Nullable<FindManyUserInput>): Nullable<User>[] | Promise<Nullable<User>[]>;
+
+    abstract user(id: number): Nullable<User> | Promise<Nullable<User>>;
+
+    abstract workspaces(findManyWorkspaceInput?: Nullable<FindManyWorkspaceInput>): Nullable<Workspace>[] | Promise<Nullable<Workspace>[]>;
+
+    abstract workspace(id: number): Nullable<Workspace> | Promise<Nullable<Workspace>>;
+
+    abstract profil(): Nullable<User> | Promise<Nullable<User>>;
 }
 
 export class User {
-  id: number;
-  name: string;
-  email: string;
+    id: number;
+    name: string;
+    email: string;
 }
 
 export class Workspace {
-  id: number;
-  name: string;
-  users?: Nullable<Nullable<User>[]>;
-  createdAt: string;
-  updatedAt: string;
+    id: number;
+    name: string;
+    users?: Nullable<Nullable<User>[]>;
+    createdAt: string;
+    updatedAt: string;
 }
 
 type Nullable<T> = T | null;

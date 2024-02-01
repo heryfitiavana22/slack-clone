@@ -5,6 +5,10 @@ import { UserModule } from './user/user.module';
 import { join } from 'path';
 import { WorkspaceModule } from './workspace/workspace.module';
 import { ChannelModule } from './channel/channel.module';
+import { AuthModule } from './auth/auth.module';
+import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
+import { APP_GUARD } from '@nestjs/core';
+import { GqlAuthGuard } from './auth/guards/gql-auth.guard';
 
 @Module({
   imports: [
@@ -19,6 +23,13 @@ import { ChannelModule } from './channel/channel.module';
     UserModule,
     WorkspaceModule,
     ChannelModule,
+    AuthModule,
+  ],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: GqlAuthGuard,
+    },
   ],
 })
 export class AppModule {}

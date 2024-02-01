@@ -5,6 +5,7 @@ import {
   UpdateUserInput,
 } from 'src/graphql';
 import { PrismaService } from 'src/prisma.service';
+import { FindUserInput } from './dto/create-user-dto';
 
 @Injectable()
 export class UserService {
@@ -18,7 +19,11 @@ export class UserService {
     return this.prisma.user.findMany({ where });
   }
 
-  findOne(id: number) {
+  findOne(where: FindUserInput) {
+    return this.prisma.user.findFirst({ where });
+  }
+
+  findById(id: number) {
     return this.prisma.user.findUnique({ where: { id } });
   }
 
