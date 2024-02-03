@@ -1,14 +1,5 @@
 import { create } from "zustand";
-
-type AuthStatus = "unknown" | "guest" | "authenticated";
-type UserAuth =
-    | {
-          id: number;
-          name: string;
-          email: string;
-      }
-    | null
-    | undefined;
+import { UserAuth, AuthStatus } from "./auth-type";
 
 type AuthStore = {
     user: UserAuth;

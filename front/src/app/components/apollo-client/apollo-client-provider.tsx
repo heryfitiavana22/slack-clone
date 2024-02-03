@@ -6,7 +6,7 @@ import {
     createHttpLink,
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
-import { AccessTokenPersistence } from "src/app/auth/token.persistence";
+import { AccessTokenPersistence } from "src/app/auth/token-persistence";
 
 const SERVER_URL = import.meta.env.VITE_SERVER_URL + "/graphql" || "";
 const httpLink = createHttpLink({

@@ -1,6 +1,7 @@
 import { gql, useQuery } from "@apollo/client";
 import { PropsWithChildren, useEffect } from "react";
 import { useAuth } from "./use-auth";
+import { UserAuth } from "./auth-type";
 
 const GET_ME = gql`
     query {
@@ -13,9 +14,9 @@ const GET_ME = gql`
 `;
 
 export function AuthProvider({ children }: AuthProviderProps) {
-    const { error, data } = useQuery(GET_ME);
+    const { error, data } = useQuery<{ me: UserAuth }>(GET_ME);
     const { setUser } = useAuth();
-    console.log(data);
+    // console.log(data);
 
     useEffect(() => {
         if (data?.me) return setUser(data.me);
