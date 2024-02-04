@@ -24,7 +24,10 @@ export class ChannelResolver {
 
   @Mutation('updateChannel')
   update(@Args('updateChannelInput') updateChannelInput: UpdateChannelInput) {
-    return this.channelService.update(updateChannelInput.id, updateChannelInput);
+    return this.channelService.update(
+      updateChannelInput.id,
+      updateChannelInput,
+    );
   }
 
   @Mutation('removeChannel')

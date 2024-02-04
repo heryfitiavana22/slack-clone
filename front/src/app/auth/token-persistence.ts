@@ -1,14 +1,14 @@
-const keyAT = "@access_token_sc";
+const keyAT = '@access_token_sc';
 export class AccessTokenPersistence {
-    static get() {
-        return localStorage.getItem(keyAT);
-    }
+  static get() {
+    return localStorage.getItem(keyAT);
+  }
 
-    static save(token: string) {
-        return localStorage.setItem(keyAT, token);
-    }
+  static save(token: string) {
+    return localStorage.setItem(keyAT, token);
+  }
 
-    static remove() {
-        return localStorage.removeItem(keyAT);
-    }
+  static remove() {
+    return localStorage.removeItem(keyAT);
+  }
 }

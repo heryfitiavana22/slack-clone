@@ -1,18 +1,18 @@
 export type Token = {
-    access_token: string;
+  access_token: string;
 };
 
 export type Login = {
-    email: string;
-    password: string;
+  email: string;
+  password: string;
 };
 
-export type AuthStatus = "unknown" | "guest" | "authenticated";
+export type AuthStatus = 'unknown' | 'guest' | 'authenticated';
 export type UserAuth =
-    | {
-          id: number;
-          name: string;
-          email: string;
-      }
-    | null
-    | undefined;
+  | {
+      id: number;
+      name: string;
+      email: string;
+    }
+  | null
+  | undefined;
