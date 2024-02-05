@@ -2,11 +2,13 @@ import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { UserService } from './user.service';
 import { FindManyUserInput, UpdateUserInput } from 'src/graphql';
 import { CreateUserDto } from './dto/create-user-dto';
+import { Public } from 'src/auth/auth.decorator';
 
 @Resolver('User')
 export class UserResolver {
   constructor(private readonly userService: UserService) {}
 
+  @Public()
   @Mutation('createUser')
   create(@Args('createUserInput') createUserDto: CreateUserDto) {
     return this.userService.create(createUserDto);

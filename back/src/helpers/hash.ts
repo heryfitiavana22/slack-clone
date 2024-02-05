@@ -1,11 +1,12 @@
+import * as bcrypt from 'bcrypt';
+
+const SALT_ROUND = 8;
 export class Hash {
   static make(value: string) {
-    return value;
-    // return bcrypt.hashSync(value, SALT_ROUND);
+    return bcrypt.hashSync(value, SALT_ROUND);
   }
 
   static compare(value: string, hashValue: string) {
-    return value == hashValue;
-    // return bcrypt.compareSync(value, hashValue);
+    return bcrypt.compareSync(value, hashValue);
   }
 }

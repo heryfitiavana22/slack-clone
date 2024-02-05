@@ -3,6 +3,7 @@ import { UserService } from 'src/user/user.service';
 import { JwtService } from '@nestjs/jwt';
 import { UserPayload } from './auth.type';
 import { User } from 'src/graphql';
+import { Hash } from 'src/helpers/hash';
 
 @Injectable()
 export class AuthService {
@@ -11,10 +12,10 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async validateUser(email: string, pass: string) {
+  async validateUser(email: string, password: string) {
     const user = await this.usersService.findOne({ email });
-    if (user) {
-      const { ...result } = user;
+    if (user && Hash.compare(password, user.password)) {
+      const { password, ...result } = user;
       return result;
     }
     return null;

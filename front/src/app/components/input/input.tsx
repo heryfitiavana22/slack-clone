@@ -3,18 +3,29 @@ import { ComponentPropsWithoutRef, forwardRef } from 'react';
 
 export const Input = forwardRef(
   (
-    { label, className, id, type = 'text', placeholder, ...props }: InputProps,
+    {
+      label,
+      labelRight,
+      className,
+      id,
+      type = 'text',
+      placeholder,
+      ...props
+    }: InputProps,
     ref,
   ) => {
     return (
       <div>
         {label && (
-          <label
-            htmlFor={id}
-            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-          >
-            {label}
-          </label>
+          <div className="flex items-center justify-between gap-3 mb-2">
+            <label
+              htmlFor={id}
+              className="block text-sm font-medium text-gray-900 dark:text-white"
+            >
+              {label}
+            </label>
+            {labelRight}
+          </div>
         )}
         <input
           type={type}
@@ -34,4 +45,5 @@ export const Input = forwardRef(
 
 type InputProps = ComponentPropsWithoutRef<'input'> & {
   label?: string;
+  labelRight?: React.ReactNode;
 };

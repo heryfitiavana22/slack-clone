@@ -24,12 +24,14 @@ export class UpdateChannelInput {
 export class CreateUserInput {
     name: string;
     email: string;
+    password: string;
 }
 
 export class UpdateUserInput {
     id: number;
     name?: Nullable<string>;
     email?: Nullable<string>;
+    password?: Nullable<string>;
 }
 
 export class FindManyUserInput {

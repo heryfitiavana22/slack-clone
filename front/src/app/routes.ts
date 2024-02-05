@@ -1,5 +1,7 @@
 export const ROUTES = {
   none: () => '',
   home: () => '/',
-  login: () => 'login',
+  login: () => '/login',
+  signup: () => '/signup',
+  workspace: (id: string) => `/workspace/${id}`,
 };

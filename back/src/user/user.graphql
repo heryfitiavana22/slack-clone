@@ -7,12 +7,14 @@ type User {
 input CreateUserInput {
   name: String!
   email: String!
+  password: String!
 }
 
 input UpdateUserInput {
   id: Int!
   name: String
   email: String
+  password: String
 }
 
 input FindManyUserInput {

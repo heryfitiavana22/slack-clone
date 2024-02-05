@@ -4,12 +4,12 @@ import { Button } from 'src/app/components/button/button';
 import { GuestGuard } from 'src/app/components/guard/guest-guard';
 import { Input } from 'src/app/components/input/input';
 import { H2 } from 'src/app/components/typography/typography';
-import { useLogin } from './use-login';
 import { Loading } from 'src/app/components/loading/loading';
+import { useSignup } from './use-signup';
 import { ROUTES } from 'src/app/routes';
 
-export function Login({}: LoginProps) {
-  const { loading, error, onSubmit, register } = useLogin();
+export function Signup({}: SignupProps) {
+  const { loading, error, onSubmit, register } = useSignup();
 
   return (
     <GuestGuard>
@@ -23,9 +23,16 @@ export function Login({}: LoginProps) {
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <form method="post" className="space-y-6" onSubmit={onSubmit()}>
             <Input
+              type="text"
+              id="name"
+              placeholder="exemple"
+              label="Nom :"
+              {...register('name', { required: true })}
+            />
+            <Input
               type="email"
               id="email"
-              placeholder="example@gmail.com"
+              placeholder="exemple@gmail.com"
               label="Email :"
               {...register('email', { required: true })}
             />
@@ -33,30 +40,22 @@ export function Login({}: LoginProps) {
               type="password"
               id="password"
               label="Mot de passe :"
-              labelRight={
-                <div className="text-sm">
-                  <Link to="#" className="font-semibold text-secondary">
-                    Forgot password?
-                  </Link>
-                </div>
-              }
               {...register('password', { required: true })}
             />
-            {error && (
-              <p className="text-red-500">Email ou mot de passe incorrect</p>
-            )}
+
+            {error && <p className="text-red-500">Email déjà existant</p>}
 
             <div>
-              <Button className="w-full">Se connecter</Button>
+              <Button className="w-full">S'inscrire</Button>
             </div>
           </form>
 
           <p className="mt-10 text-center text-sm">
             <Link
-              to={ROUTES.signup()}
+              to={ROUTES.login()}
               className="font-semibold leading-6  text-secondary"
             >
-              Créer un compte
+              Déjà un compte?
             </Link>
           </p>
         </div>
@@ -66,4 +65,4 @@ export function Login({}: LoginProps) {
   );
 }
 
-type LoginProps = PropsWithChildren<{}>;
+type SignupProps = PropsWithChildren<{}>;

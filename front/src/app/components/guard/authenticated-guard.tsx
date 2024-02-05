@@ -6,9 +6,7 @@ import { ROUTES } from 'src/app/routes';
 
 export function AuthenticatedGuard({ children }: AuthenticatedGuardProps) {
   const { status } = useAuth();
-  // console.log(user);
 
-  console.log(status);
   if (status == 'unknown') return <Loading />;
 
   if (status == 'guest') return <Navigate to={ROUTES.login()} />;

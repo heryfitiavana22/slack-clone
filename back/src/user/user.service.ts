@@ -6,13 +6,20 @@ import {
 } from 'src/graphql';
 import { PrismaService } from 'src/prisma.service';
 import { FindUserInput } from './dto/create-user-dto';
+import { Hash } from 'src/helpers/hash';
+import { Public } from 'src/auth/auth.decorator';
 
 @Injectable()
 export class UserService {
   constructor(private prisma: PrismaService) {}
 
   create(createUserInput: CreateUserInput) {
-    return this.prisma.user.create({ data: { ...createUserInput } });
+    return this.prisma.user.create({
+      data: {
+        ...createUserInput,
+        password: Hash.make(createUserInput.password),
+      },
+    });
   }
 
   findAll(where: FindManyUserInput) {

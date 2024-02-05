@@ -15,7 +15,7 @@ import { GqlAuthGuard } from './guards/gql-auth.guard';
     PassportModule,
     JwtModule.register({
       secret: jwtConstants.access_token,
-      signOptions: { expiresIn: '1d' },
+      signOptions: { expiresIn: '60s' },
     }),
   ],
   providers: [

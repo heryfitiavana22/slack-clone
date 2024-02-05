@@ -22,10 +22,7 @@ export class AuthResolver {
   }
 
   @Query('me')
-  findAll(@CurrentUser() user: UserPayload) {
-    console.log('user');
-    console.log(user);
-
+  me(@CurrentUser() user: UserPayload) {
     return user;
   }
 }

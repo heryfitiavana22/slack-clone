@@ -5,7 +5,6 @@ import { ROUTES } from 'src/app/routes';
 
 export function GuestGuard({ children }: GuestGuardProps) {
   const { status } = useAuth();
-  // console.log(status);
 
   if (status == 'unknown') return <div>loading...</div>;
 
