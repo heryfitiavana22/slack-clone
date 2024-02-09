@@ -30,3 +30,12 @@ mutation CreatWorkspace($name: String!, $usersEmails: [String]!) {
     name
   }
 }
+
+query AmIInWorkspace($workspaceId: Int!) {
+  amIInWorkspace(amIInWorkspaceInput: { workspaceId: $workspaceId }) {
+    id
+    name
+    createdAt
+    updatedAt
+  }
+}

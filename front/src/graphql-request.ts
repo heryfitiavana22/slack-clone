@@ -17,6 +17,10 @@ export type Scalars = {
   Float: { input: number; output: number; }
 };
 
+export type AmIInWorkspaceInput = {
+  workspaceId: Scalars['Int']['input'];
+};
+
 export type Channel = {
   __typename?: 'Channel';
   exampleField?: Maybe<Scalars['Int']['output']>;
@@ -44,6 +48,17 @@ export type FindManyUserInput = {
 
 export type FindManyWorkspaceInput = {
   name?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type FindWorkspaceInput = {
+  id?: InputMaybe<Scalars['Int']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  userId?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type IsInWorkspace = {
+  __typename?: 'IsInWorkspace';
+  is: Scalars['Boolean']['output'];
 };
 
 export type LoginInput = {
@@ -117,6 +132,7 @@ export type MutationUpdateWorkspaceArgs = {
 
 export type Query = {
   __typename?: 'Query';
+  amIInWorkspace?: Maybe<Workspace>;
   channel?: Maybe<Channel>;
   channels: Array<Maybe<Channel>>;
   me?: Maybe<User>;
@@ -124,6 +140,11 @@ export type Query = {
   users: Array<Maybe<User>>;
   workspace?: Maybe<Workspace>;
   workspaces: Array<Maybe<Workspace>>;
+};
+
+
+export type QueryAmIInWorkspaceArgs = {
+  amIInWorkspaceInput?: InputMaybe<AmIInWorkspaceInput>;
 };
 
 
@@ -216,6 +237,13 @@ export type CreatWorkspaceMutationVariables = Exact<{
 
 
 export type CreatWorkspaceMutation = { __typename?: 'Mutation', createWorkspace: { __typename?: 'Workspace', id: number, name: string } };
+
+export type AmIInWorkspaceQueryVariables = Exact<{
+  workspaceId: Scalars['Int']['input'];
+}>;
+
+
+export type AmIInWorkspaceQuery = { __typename?: 'Query', amIInWorkspace?: { __typename?: 'Workspace', id: number, name: string, createdAt: string, updatedAt: string } | null };
 
 
 export const MeDocument = gql`
@@ -365,3 +393,46 @@ export function useCreatWorkspaceMutation(baseOptions?: Apollo.MutationHookOptio
 export type CreatWorkspaceMutationHookResult = ReturnType<typeof useCreatWorkspaceMutation>;
 export type CreatWorkspaceMutationResult = Apollo.MutationResult<CreatWorkspaceMutation>;
 export type CreatWorkspaceMutationOptions = Apollo.BaseMutationOptions<CreatWorkspaceMutation, CreatWorkspaceMutationVariables>;
+export const AmIInWorkspaceDocument = gql`
+    query AmIInWorkspace($workspaceId: Int!) {
+  amIInWorkspace(amIInWorkspaceInput: {workspaceId: $workspaceId}) {
+    id
+    name
+    createdAt
+    updatedAt
+  }
+}
+    `;
+
+/**
+ * __useAmIInWorkspaceQuery__
+ *
+ * To run a query within a React component, call `useAmIInWorkspaceQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAmIInWorkspaceQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAmIInWorkspaceQuery({
+ *   variables: {
+ *      workspaceId: // value for 'workspaceId'
+ *   },
+ * });
+ */
+export function useAmIInWorkspaceQuery(baseOptions: Apollo.QueryHookOptions<AmIInWorkspaceQuery, AmIInWorkspaceQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<AmIInWorkspaceQuery, AmIInWorkspaceQueryVariables>(AmIInWorkspaceDocument, options);
+      }
+export function useAmIInWorkspaceLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AmIInWorkspaceQuery, AmIInWorkspaceQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<AmIInWorkspaceQuery, AmIInWorkspaceQueryVariables>(AmIInWorkspaceDocument, options);
+        }
+export function useAmIInWorkspaceSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<AmIInWorkspaceQuery, AmIInWorkspaceQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<AmIInWorkspaceQuery, AmIInWorkspaceQueryVariables>(AmIInWorkspaceDocument, options);
+        }
+export type AmIInWorkspaceQueryHookResult = ReturnType<typeof useAmIInWorkspaceQuery>;
+export type AmIInWorkspaceLazyQueryHookResult = ReturnType<typeof useAmIInWorkspaceLazyQuery>;
+export type AmIInWorkspaceSuspenseQueryHookResult = ReturnType<typeof useAmIInWorkspaceSuspenseQuery>;
+export type AmIInWorkspaceQueryResult = Apollo.QueryResult<AmIInWorkspaceQuery, AmIInWorkspaceQueryVariables>;

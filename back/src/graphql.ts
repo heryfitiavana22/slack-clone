@@ -53,6 +53,16 @@ export class FindManyWorkspaceInput {
     name?: Nullable<string>;
 }
 
+export class FindWorkspaceInput {
+    id?: Nullable<number>;
+    name?: Nullable<string>;
+    userId?: Nullable<number>;
+}
+
+export class AmIInWorkspaceInput {
+    workspaceId: number;
+}
+
 export class Token {
     access_token: string;
 }
@@ -71,6 +81,8 @@ export abstract class IQuery {
     abstract workspaces(findManyWorkspaceInput?: Nullable<FindManyWorkspaceInput>): Nullable<Workspace>[] | Promise<Nullable<Workspace>[]>;
 
     abstract workspace(id: number): Nullable<Workspace> | Promise<Nullable<Workspace>>;
+
+    abstract amIInWorkspace(amIInWorkspaceInput?: Nullable<AmIInWorkspaceInput>): Nullable<Workspace> | Promise<Nullable<Workspace>>;
 }
 
 export abstract class IMutation {
@@ -110,6 +122,10 @@ export class Workspace {
     name: string;
     createdAt: string;
     updatedAt: string;
+}
+
+export class IsInWorkspace {
+    is: boolean;
 }
 
 type Nullable<T> = T | null;

@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import {
   CreateWorkspaceInput,
   FindManyWorkspaceInput,
+  FindWorkspaceInput,
   UpdateWorkspaceInput,
 } from 'src/graphql';
 import { PrismaService } from 'src/prisma.service';
@@ -24,8 +25,18 @@ export class WorkspaceService {
     return this.prisma.workspace.findMany({ where });
   }
 
-  findOne(id: number) {
-    return this.prisma.workspace.findUnique({ where: { id: id } });
+  findById(id: number) {
+    return this.prisma.user.findUnique({ where: { id } });
+  }
+
+  findOne(findWorkspaceInput: FindWorkspaceInput) {
+    const { userId, ...where } = findWorkspaceInput;
+    return this.prisma.workspace.findFirst({
+      where: {
+        ...where,
+        users: { some: { id: userId } },
+      },
+    });
   }
 
   update(id: number, updateWorkspaceInput: UpdateWorkspaceInput) {

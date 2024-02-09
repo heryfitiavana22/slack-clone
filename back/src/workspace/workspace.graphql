@@ -5,6 +5,10 @@ type Workspace {
   updatedAt: String!
 }
 
+type IsInWorkspace {
+  is: Boolean!
+}
+
 input CreateWorkspaceInput {
   name: String!
   usersEmails: [String]!
@@ -19,9 +23,20 @@ input FindManyWorkspaceInput {
   name: String
 }
 
+input FindWorkspaceInput {
+  id: Int
+  name: String
+  userId: Int
+}
+
+input AmIInWorkspaceInput {
+  workspaceId: Int!
+}
+
 type Query {
   workspaces(findManyWorkspaceInput: FindManyWorkspaceInput): [Workspace]!
   workspace(id: Int!): Workspace
+  amIInWorkspace(amIInWorkspaceInput: AmIInWorkspaceInput): Workspace
 }
 
 type Mutation {
