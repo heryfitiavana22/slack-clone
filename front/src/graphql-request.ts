@@ -34,6 +34,7 @@ export type CreateUserInput = {
 
 export type CreateWorkspaceInput = {
   name: Scalars['String']['input'];
+  usersEmails: Array<InputMaybe<Scalars['String']['input']>>;
 };
 
 export type FindManyUserInput = {
@@ -184,7 +185,6 @@ export type Workspace = {
   id: Scalars['Int']['output'];
   name: Scalars['String']['output'];
   updatedAt: Scalars['String']['output'];
-  users?: Maybe<Array<Maybe<User>>>;
 };
 
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
@@ -208,6 +208,14 @@ export type CreateUserMutationVariables = Exact<{
 
 
 export type CreateUserMutation = { __typename?: 'Mutation', createUser: { __typename?: 'User', id: number, name: string, email: string } };
+
+export type CreatWorkspaceMutationVariables = Exact<{
+  name: Scalars['String']['input'];
+  usersEmails: Array<InputMaybe<Scalars['String']['input']>> | InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type CreatWorkspaceMutation = { __typename?: 'Mutation', createWorkspace: { __typename?: 'Workspace', id: number, name: string } };
 
 
 export const MeDocument = gql`
@@ -322,3 +330,38 @@ export function useCreateUserMutation(baseOptions?: Apollo.MutationHookOptions<C
 export type CreateUserMutationHookResult = ReturnType<typeof useCreateUserMutation>;
 export type CreateUserMutationResult = Apollo.MutationResult<CreateUserMutation>;
 export type CreateUserMutationOptions = Apollo.BaseMutationOptions<CreateUserMutation, CreateUserMutationVariables>;
+export const CreatWorkspaceDocument = gql`
+    mutation CreatWorkspace($name: String!, $usersEmails: [String]!) {
+  createWorkspace(createWorkspaceInput: {name: $name, usersEmails: $usersEmails}) {
+    id
+    name
+  }
+}
+    `;
+export type CreatWorkspaceMutationFn = Apollo.MutationFunction<CreatWorkspaceMutation, CreatWorkspaceMutationVariables>;
+
+/**
+ * __useCreatWorkspaceMutation__
+ *
+ * To run a mutation, you first call `useCreatWorkspaceMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreatWorkspaceMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [creatWorkspaceMutation, { data, loading, error }] = useCreatWorkspaceMutation({
+ *   variables: {
+ *      name: // value for 'name'
+ *      usersEmails: // value for 'usersEmails'
+ *   },
+ * });
+ */
+export function useCreatWorkspaceMutation(baseOptions?: Apollo.MutationHookOptions<CreatWorkspaceMutation, CreatWorkspaceMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreatWorkspaceMutation, CreatWorkspaceMutationVariables>(CreatWorkspaceDocument, options);
+      }
+export type CreatWorkspaceMutationHookResult = ReturnType<typeof useCreatWorkspaceMutation>;
+export type CreatWorkspaceMutationResult = Apollo.MutationResult<CreatWorkspaceMutation>;
+export type CreatWorkspaceMutationOptions = Apollo.BaseMutationOptions<CreatWorkspaceMutation, CreatWorkspaceMutationVariables>;

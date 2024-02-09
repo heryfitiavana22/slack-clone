@@ -11,9 +11,11 @@ export class WorkspaceService {
   constructor(private prisma: PrismaService) {}
 
   create(createWorkspaceInput: CreateWorkspaceInput) {
+    const { usersEmails, ...workspace } = createWorkspaceInput;
     return this.prisma.workspace.create({
       data: {
-        ...createWorkspaceInput,
+        ...workspace,
+        users: { connect: usersEmails.map((email) => ({ email })) },
       },
     });
   }

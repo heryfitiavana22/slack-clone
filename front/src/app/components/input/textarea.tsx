@@ -1,18 +1,17 @@
 import classNames from 'classnames';
 import { ComponentPropsWithoutRef, forwardRef } from 'react';
 
-export const Input = forwardRef(
+export const Textarea = forwardRef(
   (
     {
       label,
       labelRight,
-      labelClassName,
       className,
       id,
-      type = 'text',
       placeholder,
+      labelClassName,
       ...props
-    }: InputProps,
+    }: TextareaProps,
     ref,
   ) => {
     return (
@@ -22,7 +21,7 @@ export const Input = forwardRef(
             <label
               htmlFor={id}
               className={classNames(
-                'block text-sm  text-gray-900 dark:text-white',
+                'block text-sm text-gray-900 dark:text-white',
                 labelClassName,
               )}
             >
@@ -31,8 +30,7 @@ export const Input = forwardRef(
             {labelRight}
           </div>
         )}
-        <input
-          type={type}
+        <textarea
           id={id}
           className={classNames(
             'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500',
@@ -47,7 +45,7 @@ export const Input = forwardRef(
   },
 );
 
-type InputProps = ComponentPropsWithoutRef<'input'> & {
+type TextareaProps = ComponentPropsWithoutRef<'textarea'> & {
   label?: string;
   labelRight?: React.ReactNode;
   labelClassName?: string;

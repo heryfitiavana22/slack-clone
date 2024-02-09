@@ -3,5 +3,6 @@ export const ROUTES = {
   home: () => '/',
   login: () => '/login',
   signup: () => '/signup',
-  workspace: (id: string) => `/workspace/${id}`,
+  workspace: (id: string | number) => `/workspace/${id}`,
+  createWorkspace: () => `/workspace/create`,
 };

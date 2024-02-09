@@ -21,3 +21,12 @@ mutation CreateUser($name: String!, $email: String!, $password: String!) {
     email
   }
 }
+
+mutation CreatWorkspace($name: String!, $usersEmails: [String]!) {
+  createWorkspace(
+    createWorkspaceInput: { name: $name, usersEmails: $usersEmails }
+  ) {
+    id
+    name
+  }
+}

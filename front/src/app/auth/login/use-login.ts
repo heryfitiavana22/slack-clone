@@ -12,7 +12,7 @@ export function useLogin() {
   const submit: SubmitHandler<Login> = async ({ email, password }) => {
     try {
       const response = await login({ variables: { email, password } });
-      console.log(response);
+      // console.log(response);
       if (response.data) {
         AccessTokenPersistence.save(response.data.login.access_token);
         return refetchUser();

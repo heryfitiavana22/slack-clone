@@ -5,16 +5,17 @@ import {
   FindManyWorkspaceInput,
   UpdateWorkspaceInput,
 } from 'src/graphql';
+import { CreateWorkspaceDto } from './dto/create-workspace-dto';
 
 @Resolver('Workspace')
 export class WorkspaceResolver {
   constructor(private readonly workspaceService: WorkspaceService) {}
 
   @Mutation('createWorkspace')
-  create(
-    @Args('createWorkspaceInput') createWorkspaceInput: CreateWorkspaceInput,
-  ) {
-    return this.workspaceService.create(createWorkspaceInput);
+  create(@Args('createWorkspaceInput') createWorkspaceDto: CreateWorkspaceDto) {
+    console.log(createWorkspaceDto);
+
+    return this.workspaceService.create(createWorkspaceDto);
   }
 
   @Query('workspaces')

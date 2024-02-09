@@ -41,6 +41,7 @@ export class FindManyUserInput {
 
 export class CreateWorkspaceInput {
     name: string;
+    usersEmails: Nullable<string>[];
 }
 
 export class UpdateWorkspaceInput {
@@ -107,7 +108,6 @@ export class User {
 export class Workspace {
     id: number;
     name: string;
-    users?: Nullable<Nullable<User>[]>;
     createdAt: string;
     updatedAt: string;
 }
