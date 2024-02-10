@@ -4,8 +4,8 @@ import { Login } from './auth/login/login';
 import { MainLayout } from './components/layout/main-layout';
 import { ROUTES } from './routes';
 import { Signup } from './auth/signup/signup';
-import { ListWorkspace } from './list-workspace/list-workspace';
-import { CreateWorkspace } from './list-workspace/create/create-workspace';
+import { CreateWorkspace } from './workspace/create/create-workspace';
+import { ListWorkspace } from './workspace/list-workspace/list-workspace';
 
 const router = createBrowserRouter([
   {

@@ -39,3 +39,12 @@ query AmIInWorkspace($workspaceId: Int!) {
     updatedAt
   }
 }
+
+query MyWorkspaces {
+  myWorkspaces {
+    id
+    name
+    createdAt
+    updatedAt
+  }
+}

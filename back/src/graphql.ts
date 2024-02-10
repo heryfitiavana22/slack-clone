@@ -51,6 +51,7 @@ export class UpdateWorkspaceInput {
 
 export class FindManyWorkspaceInput {
     name?: Nullable<string>;
+    userId?: Nullable<number>;
 }
 
 export class FindWorkspaceInput {
@@ -83,6 +84,8 @@ export abstract class IQuery {
     abstract workspace(id: number): Nullable<Workspace> | Promise<Nullable<Workspace>>;
 
     abstract amIInWorkspace(amIInWorkspaceInput?: Nullable<AmIInWorkspaceInput>): Nullable<Workspace> | Promise<Nullable<Workspace>>;
+
+    abstract myWorkspaces(): Nullable<Workspace>[] | Promise<Nullable<Workspace>[]>;
 }
 
 export abstract class IMutation {

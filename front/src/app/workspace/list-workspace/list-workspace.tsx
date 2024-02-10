@@ -1,12 +1,18 @@
-import { Button } from '../components/button/button';
-import { H1, H3 } from '../components/typography/typography';
-import { AppIcon } from '../components/icons/app-icon';
+import { Button } from 'src/app/components/button/button';
+import { AuthenticatedGuard } from 'src/app/components/guard/authenticated-guard';
+import { AppIcon } from 'src/app/components/icons/app-icon';
+import { H1, H3 } from 'src/app/components/typography/typography';
+import { ROUTES } from 'src/app/routes';
 import { WorkspaceItem } from './components/workspace-item';
 import { Link } from 'react-router-dom';
-import { ROUTES } from '../routes';
-import { AuthenticatedGuard } from '../components/guard/authenticated-guard';
+import { useListWorkspace } from './use-list-workspace';
+import { Loading } from 'src/app/components/loading/loading';
 
 export function ListWorkspace({}: ListWorkspaceProps) {
+  const { data, loading } = useListWorkspace();
+
+  if (loading || !data) return <Loading />;
+
   return (
     <AuthenticatedGuard>
       <div className="bg-primary-600 min-h-screen flex flex-col items-center text-white p-4">
@@ -16,9 +22,7 @@ export function ListWorkspace({}: ListWorkspaceProps) {
           </div>
           <div className="flex items-center space-x-4">
             <Link to={ROUTES.createWorkspace()}>
-              <Button className="" variant="secondary">
-                CREÉR UN WORKSPACE
-              </Button>
+              <Button variant="secondary">CREÉR UN WORKSPACE</Button>
             </Link>
           </div>
         </header>
@@ -28,15 +32,25 @@ export function ListWorkspace({}: ListWorkspaceProps) {
             <H3 className="font-semibold bg-primary-100 p-6 rounded-t-lg">
               Espace de travail :
             </H3>
-            <WorkspaceItem workspace={{ name: 'hery-dj', members: 2 }} />
-            <WorkspaceItem workspace={{ name: 'example-dj', members: 3 }} />
+            {data.myWorkspaces.map((workspace) => (
+              <WorkspaceItem
+                workspace={{
+                  id: workspace?.id,
+                  name: workspace?.name,
+                  members: 2,
+                }}
+                key={workspace?.id}
+              />
+            ))}
           </div>
           <div className="flex flex-col items-center mt-12">
             <div className="text-center">
               <p className="mb-2">
                 Vous souhaitez utiliser Slack avec une autre équipe ?
               </p>
-              <Button variant="secondary">CREÉR UN WORKSPACE</Button>
+              <Link to={ROUTES.createWorkspace()}>
+                <Button variant="secondary">CREÉR UN WORKSPACE</Button>
+              </Link>
             </div>
           </div>
         </main>

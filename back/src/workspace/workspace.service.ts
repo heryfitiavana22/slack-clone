@@ -21,8 +21,12 @@ export class WorkspaceService {
     });
   }
 
-  findAll(where?: FindManyWorkspaceInput) {
-    return this.prisma.workspace.findMany({ where });
+  findAll(input?: FindManyWorkspaceInput) {
+    const { userId, ...workspace } = input;
+    return this.prisma.workspace.findMany({
+      where: { ...workspace, users: { some: { id: userId } } },
+      // include: { _count: { select: { users: true } } },
+    });
   }
 
   findById(id: number) {

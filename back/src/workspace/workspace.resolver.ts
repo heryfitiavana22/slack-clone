@@ -45,6 +45,11 @@ export class WorkspaceResolver {
     return find;
   }
 
+  @Query('myWorkspaces')
+  async myWorkspaces(@CurrentUser() user: UserPayload) {
+    return this.workspaceService.findAll({ userId: user.id });
+  }
+
   @Mutation('updateWorkspace')
   update(
     @Args('updateWorkspaceInput') updateWorkspaceInput: UpdateWorkspaceInput,

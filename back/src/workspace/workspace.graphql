@@ -21,6 +21,7 @@ input UpdateWorkspaceInput {
 
 input FindManyWorkspaceInput {
   name: String
+  userId: Int
 }
 
 input FindWorkspaceInput {
@@ -37,6 +38,7 @@ type Query {
   workspaces(findManyWorkspaceInput: FindManyWorkspaceInput): [Workspace]!
   workspace(id: Int!): Workspace
   amIInWorkspace(amIInWorkspaceInput: AmIInWorkspaceInput): Workspace
+  myWorkspaces: [Workspace]!
 }
 
 type Mutation {

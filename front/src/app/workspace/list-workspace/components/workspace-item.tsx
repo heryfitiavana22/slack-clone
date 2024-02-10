@@ -1,5 +1,7 @@
+import { Link } from 'react-router-dom';
 import { Button } from 'src/app/components/button/button';
 import { H6 } from 'src/app/components/typography/typography';
+import { ROUTES } from 'src/app/routes';
 
 export function WorkspaceItem({ workspace }: WorkspaceItemProps) {
   return (
@@ -10,14 +12,17 @@ export function WorkspaceItem({ workspace }: WorkspaceItemProps) {
           <span className="text-sm">{workspace.members} membres</span>
         </div>
       </div>
-      <Button>Lancer</Button>
+      <Link to={ROUTES.workspace(workspace.id || 0)}>
+        <Button>Lancer</Button>
+      </Link>
     </div>
   );
 }
 
 type WorkspaceItemProps = {
   workspace: {
-    name: string;
-    members: number;
+    id?: number;
+    name?: string;
+    members?: number;
   };
 };

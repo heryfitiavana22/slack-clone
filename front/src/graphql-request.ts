@@ -48,6 +48,7 @@ export type FindManyUserInput = {
 
 export type FindManyWorkspaceInput = {
   name?: InputMaybe<Scalars['String']['input']>;
+  userId?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type FindWorkspaceInput = {
@@ -136,6 +137,7 @@ export type Query = {
   channel?: Maybe<Channel>;
   channels: Array<Maybe<Channel>>;
   me?: Maybe<User>;
+  myWorkspaces: Array<Maybe<Workspace>>;
   user?: Maybe<User>;
   users: Array<Maybe<User>>;
   workspace?: Maybe<Workspace>;
@@ -244,6 +246,11 @@ export type AmIInWorkspaceQueryVariables = Exact<{
 
 
 export type AmIInWorkspaceQuery = { __typename?: 'Query', amIInWorkspace?: { __typename?: 'Workspace', id: number, name: string, createdAt: string, updatedAt: string } | null };
+
+export type MyWorkspacesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type MyWorkspacesQuery = { __typename?: 'Query', myWorkspaces: Array<{ __typename?: 'Workspace', id: number, name: string, createdAt: string, updatedAt: string } | null> };
 
 
 export const MeDocument = gql`
@@ -436,3 +443,45 @@ export type AmIInWorkspaceQueryHookResult = ReturnType<typeof useAmIInWorkspaceQ
 export type AmIInWorkspaceLazyQueryHookResult = ReturnType<typeof useAmIInWorkspaceLazyQuery>;
 export type AmIInWorkspaceSuspenseQueryHookResult = ReturnType<typeof useAmIInWorkspaceSuspenseQuery>;
 export type AmIInWorkspaceQueryResult = Apollo.QueryResult<AmIInWorkspaceQuery, AmIInWorkspaceQueryVariables>;
+export const MyWorkspacesDocument = gql`
+    query MyWorkspaces {
+  myWorkspaces {
+    id
+    name
+    createdAt
+    updatedAt
+  }
+}
+    `;
+
+/**
+ * __useMyWorkspacesQuery__
+ *
+ * To run a query within a React component, call `useMyWorkspacesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMyWorkspacesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useMyWorkspacesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useMyWorkspacesQuery(baseOptions?: Apollo.QueryHookOptions<MyWorkspacesQuery, MyWorkspacesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<MyWorkspacesQuery, MyWorkspacesQueryVariables>(MyWorkspacesDocument, options);
+      }
+export function useMyWorkspacesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MyWorkspacesQuery, MyWorkspacesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<MyWorkspacesQuery, MyWorkspacesQueryVariables>(MyWorkspacesDocument, options);
+        }
+export function useMyWorkspacesSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<MyWorkspacesQuery, MyWorkspacesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<MyWorkspacesQuery, MyWorkspacesQueryVariables>(MyWorkspacesDocument, options);
+        }
+export type MyWorkspacesQueryHookResult = ReturnType<typeof useMyWorkspacesQuery>;
+export type MyWorkspacesLazyQueryHookResult = ReturnType<typeof useMyWorkspacesLazyQuery>;
+export type MyWorkspacesSuspenseQueryHookResult = ReturnType<typeof useMyWorkspacesSuspenseQuery>;
+export type MyWorkspacesQueryResult = Apollo.QueryResult<MyWorkspacesQuery, MyWorkspacesQueryVariables>;
