@@ -23,11 +23,13 @@ export type AmIInWorkspaceInput = {
 
 export type Channel = {
   __typename?: 'Channel';
-  exampleField?: Maybe<Scalars['Int']['output']>;
+  id: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
 };
 
 export type CreateChannelInput = {
-  exampleField?: InputMaybe<Scalars['Int']['input']>;
+  name: Scalars['String']['input'];
+  workspaceId: Scalars['Int']['input'];
 };
 
 export type CreateUserInput = {
@@ -39,6 +41,10 @@ export type CreateUserInput = {
 export type CreateWorkspaceInput = {
   name: Scalars['String']['input'];
   usersEmails: Array<InputMaybe<Scalars['String']['input']>>;
+};
+
+export type FindManyChannelInput = {
+  workspaceId?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type FindManyUserInput = {
@@ -155,6 +161,11 @@ export type QueryChannelArgs = {
 };
 
 
+export type QueryChannelsArgs = {
+  findManyChannelInput?: InputMaybe<FindManyChannelInput>;
+};
+
+
 export type QueryUserArgs = {
   id: Scalars['Int']['input'];
 };
@@ -181,6 +192,7 @@ export type Token = {
 
 export type UpdateChannelInput = {
   id: Scalars['Int']['input'];
+  name?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type UpdateUserInput = {
@@ -251,6 +263,21 @@ export type MyWorkspacesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type MyWorkspacesQuery = { __typename?: 'Query', myWorkspaces: Array<{ __typename?: 'Workspace', id: number, name: string, createdAt: string, updatedAt: string } | null> };
+
+export type ChannelsQueryVariables = Exact<{
+  workspaceId?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+
+export type ChannelsQuery = { __typename?: 'Query', channels: Array<{ __typename?: 'Channel', id: number, name: string } | null> };
+
+export type CreateChannelMutationVariables = Exact<{
+  name: Scalars['String']['input'];
+  workspaceId: Scalars['Int']['input'];
+}>;
+
+
+export type CreateChannelMutation = { __typename?: 'Mutation', createChannel: { __typename?: 'Channel', id: number, name: string } };
 
 
 export const MeDocument = gql`
@@ -485,3 +512,79 @@ export type MyWorkspacesQueryHookResult = ReturnType<typeof useMyWorkspacesQuery
 export type MyWorkspacesLazyQueryHookResult = ReturnType<typeof useMyWorkspacesLazyQuery>;
 export type MyWorkspacesSuspenseQueryHookResult = ReturnType<typeof useMyWorkspacesSuspenseQuery>;
 export type MyWorkspacesQueryResult = Apollo.QueryResult<MyWorkspacesQuery, MyWorkspacesQueryVariables>;
+export const ChannelsDocument = gql`
+    query Channels($workspaceId: Int) {
+  channels(findManyChannelInput: {workspaceId: $workspaceId}) {
+    id
+    name
+  }
+}
+    `;
+
+/**
+ * __useChannelsQuery__
+ *
+ * To run a query within a React component, call `useChannelsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useChannelsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useChannelsQuery({
+ *   variables: {
+ *      workspaceId: // value for 'workspaceId'
+ *   },
+ * });
+ */
+export function useChannelsQuery(baseOptions?: Apollo.QueryHookOptions<ChannelsQuery, ChannelsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ChannelsQuery, ChannelsQueryVariables>(ChannelsDocument, options);
+      }
+export function useChannelsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ChannelsQuery, ChannelsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ChannelsQuery, ChannelsQueryVariables>(ChannelsDocument, options);
+        }
+export function useChannelsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<ChannelsQuery, ChannelsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<ChannelsQuery, ChannelsQueryVariables>(ChannelsDocument, options);
+        }
+export type ChannelsQueryHookResult = ReturnType<typeof useChannelsQuery>;
+export type ChannelsLazyQueryHookResult = ReturnType<typeof useChannelsLazyQuery>;
+export type ChannelsSuspenseQueryHookResult = ReturnType<typeof useChannelsSuspenseQuery>;
+export type ChannelsQueryResult = Apollo.QueryResult<ChannelsQuery, ChannelsQueryVariables>;
+export const CreateChannelDocument = gql`
+    mutation CreateChannel($name: String!, $workspaceId: Int!) {
+  createChannel(createChannelInput: {name: $name, workspaceId: $workspaceId}) {
+    id
+    name
+  }
+}
+    `;
+export type CreateChannelMutationFn = Apollo.MutationFunction<CreateChannelMutation, CreateChannelMutationVariables>;
+
+/**
+ * __useCreateChannelMutation__
+ *
+ * To run a mutation, you first call `useCreateChannelMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateChannelMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createChannelMutation, { data, loading, error }] = useCreateChannelMutation({
+ *   variables: {
+ *      name: // value for 'name'
+ *      workspaceId: // value for 'workspaceId'
+ *   },
+ * });
+ */
+export function useCreateChannelMutation(baseOptions?: Apollo.MutationHookOptions<CreateChannelMutation, CreateChannelMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateChannelMutation, CreateChannelMutationVariables>(CreateChannelDocument, options);
+      }
+export type CreateChannelMutationHookResult = ReturnType<typeof useCreateChannelMutation>;
+export type CreateChannelMutationResult = Apollo.MutationResult<CreateChannelMutation>;
+export type CreateChannelMutationOptions = Apollo.BaseMutationOptions<CreateChannelMutation, CreateChannelMutationVariables>;

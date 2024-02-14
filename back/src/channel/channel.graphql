@@ -1,19 +1,24 @@
 type Channel {
-  # Example field (placeholder)
-  exampleField: Int
+  id: Int!
+  name: String!
+}
+
+input FindManyChannelInput {
+  workspaceId: Int
 }
 
 input CreateChannelInput {
-  # Example field (placeholder)
-  exampleField: Int
+  name: String!
+  workspaceId: Int!
 }
 
 input UpdateChannelInput {
   id: Int!
+  name: String
 }
 
 type Query {
-  channels: [Channel]!
+  channels(findManyChannelInput: FindManyChannelInput): [Channel]!
   channel(id: Int!): Channel
 }
 

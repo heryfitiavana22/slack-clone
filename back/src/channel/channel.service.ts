@@ -1,26 +1,39 @@
 import { Injectable } from '@nestjs/common';
-import { CreateChannelInput } from './dto/create-channel.input';
-import { UpdateChannelInput } from './dto/update-channel.input';
+import {
+  CreateChannelInput,
+  FindManyChannelInput,
+  UpdateChannelInput,
+} from 'src/graphql';
+import { PrismaService } from 'src/prisma.service';
 
 @Injectable()
 export class ChannelService {
+  constructor(private prisma: PrismaService) {}
+
   create(createChannelInput: CreateChannelInput) {
-    return 'This action adds a new channel';
+    const { workspaceId, ...channel } = createChannelInput;
+    return this.prisma.channel.create({
+      data: { ...channel, workspace: { connect: { id: workspaceId } } },
+    });
   }
 
-  findAll() {
-    return `This action returns all channel`;
+  findAll(input?: FindManyChannelInput) {
+    const { ...channel } = input ?? {};
+    return this.prisma.channel.findMany({ where: { ...channel } });
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} channel`;
+    return this.prisma.channel.findUnique({ where: { id } });
   }
 
   update(id: number, updateChannelInput: UpdateChannelInput) {
-    return `This action updates a #${id} channel`;
+    return this.prisma.channel.update({
+      where: { id },
+      data: { ...updateChannelInput },
+    });
   }
 
   remove(id: number) {
-    return `This action removes a #${id} channel`;
+    return this.prisma.user.delete({ where: { id } });
   }
 }

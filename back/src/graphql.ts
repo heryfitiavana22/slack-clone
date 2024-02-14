@@ -14,11 +14,13 @@ export class LoginInput {
 }
 
 export class CreateChannelInput {
-    exampleField?: Nullable<number>;
+    name: string;
+    workspaceId: number;
 }
 
 export class UpdateChannelInput {
     id: number;
+    name?: Nullable<string>;
 }
 
 export class CreateUserInput {
@@ -64,6 +66,10 @@ export class AmIInWorkspaceInput {
     workspaceId: number;
 }
 
+export class FindManyChannelInput {
+    workspaceId?: Nullable<number>;
+}
+
 export class Token {
     access_token: string;
 }
@@ -71,7 +77,7 @@ export class Token {
 export abstract class IQuery {
     abstract me(): Nullable<User> | Promise<Nullable<User>>;
 
-    abstract channels(): Nullable<Channel>[] | Promise<Nullable<Channel>[]>;
+    abstract channels(findManyChannelInput?: Nullable<FindManyChannelInput>): Nullable<Channel>[] | Promise<Nullable<Channel>[]>;
 
     abstract channel(id: number): Nullable<Channel> | Promise<Nullable<Channel>>;
 
@@ -111,7 +117,8 @@ export abstract class IMutation {
 }
 
 export class Channel {
-    exampleField?: Nullable<number>;
+    id: number;
+    name: string;
 }
 
 export class User {

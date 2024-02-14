@@ -48,3 +48,19 @@ query MyWorkspaces {
     updatedAt
   }
 }
+
+query Channels($workspaceId: Int) {
+  channels(findManyChannelInput: { workspaceId: $workspaceId }) {
+    id
+    name
+  }
+}
+
+mutation CreateChannel($name: String!, $workspaceId: Int!) {
+  createChannel(
+    createChannelInput: { name: $name, workspaceId: $workspaceId }
+  ) {
+    id
+    name
+  }
+}

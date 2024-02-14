@@ -1,7 +1,10 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { ChannelService } from './channel.service';
-import { CreateChannelInput } from './dto/create-channel.input';
-import { UpdateChannelInput } from './dto/update-channel.input';
+import {
+  CreateChannelInput,
+  FindManyChannelInput,
+  UpdateChannelInput,
+} from 'src/graphql';
 
 @Resolver('Channel')
 export class ChannelResolver {
@@ -13,8 +16,8 @@ export class ChannelResolver {
   }
 
   @Query('channels')
-  findAll() {
-    return this.channelService.findAll();
+  findAll(@Args('findManyChannelInput') query: FindManyChannelInput) {
+    return this.channelService.findAll(query);
   }
 
   @Query('channel')
