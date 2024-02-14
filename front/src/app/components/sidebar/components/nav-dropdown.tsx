@@ -1,8 +1,9 @@
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import { NavLink } from './nav-link';
 import { ChevronDown } from '../../icons/chevron-down';
 import { ChevronRight } from '../../icons/chevron-right';
 import { Plus } from '../../icons/plus';
+import classNames from 'classnames';
 
 export function NavDropdown({
   name,
@@ -10,17 +11,13 @@ export function NavDropdown({
   addCaption = 'Ajouter',
   disableAdd = false,
 }: NavDropdownProps) {
-  const id = useMemo(() => Math.floor(Math.random() * 100), []);
   const [expanded, setExpanded] = useState(false);
-  const dropdownName = `dropdown-${id}`;
 
   return (
     <>
       <button
         type="button"
         className="flex items-center w-full p-2 text-base transition duration-75 rounded-md group"
-        aria-controls={dropdownName}
-        data-collapse-toggle={dropdownName}
         onClick={() => setExpanded(!expanded)}
       >
         <span className="hover:bg-primary-400 rounded-md">
@@ -30,22 +27,24 @@ export function NavDropdown({
           {name}
         </span>
       </button>
-      <ul id={dropdownName} className="hidden py-2">
-        {dropdownItems.map((item, k) => (
-          <li key={k}>
-            <NavLink name={item.name} href={item.href} icon={item.icon} />
-          </li>
-        ))}
-        {!disableAdd && (
-          <li>
-            <NavLink
-              name={addCaption}
-              icon={<Plus className="bg-primary-400 rounded-md" />}
-              disableHover
-            />
-          </li>
-        )}
-      </ul>
+      <div className={classNames('', expanded ? 'block' : 'hidden')}>
+        <ul className=" py-2">
+          {dropdownItems.map((item, k) => (
+            <li key={k}>
+              <NavLink name={item.name} href={item.href} icon={item.icon} />
+            </li>
+          ))}
+          {!disableAdd && (
+            <li>
+              <NavLink
+                name={addCaption}
+                icon={<Plus className="bg-primary-400 rounded-md" />}
+                disableHover
+              />
+            </li>
+          )}
+        </ul>
+      </div>
     </>
   );
 }
