@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { DEFAULT_CHANNEL } from 'src/channel/channel.helper';
 import {
   CreateWorkspaceInput,
   FindManyWorkspaceInput,
@@ -17,6 +18,11 @@ export class WorkspaceService {
       data: {
         ...workspace,
         users: { connect: usersEmails.map((email) => ({ email })) },
+        channels: {
+          create: {
+            name: DEFAULT_CHANNEL,
+          },
+        },
       },
     });
   }

@@ -1,4 +1,8 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import {
+  createBrowserRouter,
+  Navigate,
+  RouterProvider,
+} from 'react-router-dom';
 import { Channel } from './channel/channel';
 import { Login } from './auth/login/login';
 import { MainLayout } from './components/layout/main-layout';
@@ -17,9 +21,12 @@ const router = createBrowserRouter([
     element: <CreateWorkspace />,
   },
   {
-    path: ROUTES.workspace(':name'),
+    path: ROUTES.workspace(':workspaceId'),
     element: <MainLayout />,
-    children: [{ index: true, element: <Channel /> }],
+    children: [
+      { index: true, element: <Navigate to={ROUTES.channel('0')} /> },
+      { path: ROUTES.channel(':channelId'), element: <Channel /> },
+    ],
   },
   {
     path: ROUTES.login(),

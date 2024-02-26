@@ -13,6 +13,16 @@ export class LoginInput {
     password: string;
 }
 
+export class FindManyChannelInput {
+    workspaceId?: Nullable<number>;
+}
+
+export class FindChannelInput {
+    id?: Nullable<number>;
+    workspaceId?: Nullable<number>;
+    name?: Nullable<string>;
+}
+
 export class CreateChannelInput {
     name: string;
     workspaceId: number;
@@ -66,10 +76,6 @@ export class AmIInWorkspaceInput {
     workspaceId: number;
 }
 
-export class FindManyChannelInput {
-    workspaceId?: Nullable<number>;
-}
-
 export class Token {
     access_token: string;
 }
@@ -80,6 +86,8 @@ export abstract class IQuery {
     abstract channels(findManyChannelInput?: Nullable<FindManyChannelInput>): Nullable<Channel>[] | Promise<Nullable<Channel>[]>;
 
     abstract channel(id: number): Nullable<Channel> | Promise<Nullable<Channel>>;
+
+    abstract channelQuery(findChannelInput?: Nullable<FindChannelInput>): Nullable<Channel> | Promise<Nullable<Channel>>;
 
     abstract users(findManyUserInput?: Nullable<FindManyUserInput>): Nullable<User>[] | Promise<Nullable<User>[]>;
 

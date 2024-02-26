@@ -31,12 +31,14 @@ model Workspace {
 
 model Channel {
   id          Int           @id @default(autoincrement())
-  name        String        @unique
+  name        String
   workspace   Workspace     @relation(fields: [workspaceId], references: [id])
   workspaceId Int
   ChatChannel ChatChannel[]
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt
+
+  @@unique([workspaceId, name])
 }
 
 model ChatChannel {

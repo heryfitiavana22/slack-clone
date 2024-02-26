@@ -2,9 +2,11 @@ import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { ChannelService } from './channel.service';
 import {
   CreateChannelInput,
+  FindChannelInput,
   FindManyChannelInput,
   UpdateChannelInput,
 } from 'src/graphql';
+import { DEFAULT_CHANNEL } from './channel.helper';
 
 @Resolver('Channel')
 export class ChannelResolver {
@@ -21,8 +23,18 @@ export class ChannelResolver {
   }
 
   @Query('channel')
-  findOne(@Args('id') id: number) {
-    return this.channelService.findOne(id);
+  findById(@Args('id') id: number) {
+    return this.channelService.findById(id);
+  }
+
+  @Query('channelQuery')
+  findOne(@Args('findChannelInput') query: FindChannelInput) {
+    if (query.id == 0)
+      return this.channelService.findOne({
+        name: DEFAULT_CHANNEL,
+        workspaceId: query.workspaceId,
+      });
+    return this.channelService.findOne(query);
   }
 
   @Mutation('updateChannel')

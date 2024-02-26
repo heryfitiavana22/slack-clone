@@ -11,7 +11,7 @@ import { Loading } from 'src/app/components/loading/loading';
 export function ListWorkspace({}: ListWorkspaceProps) {
   const { data, loading } = useListWorkspace();
 
-  if (loading || !data) return <Loading />;
+  if (loading) return <Loading />;
 
   return (
     <AuthenticatedGuard>
@@ -32,16 +32,17 @@ export function ListWorkspace({}: ListWorkspaceProps) {
             <H3 className="font-semibold bg-primary-100 p-6 rounded-t-lg">
               Espace de travail :
             </H3>
-            {data.myWorkspaces.map((workspace) => (
-              <WorkspaceItem
-                workspace={{
-                  id: workspace?.id,
-                  name: workspace?.name,
-                  members: 2,
-                }}
-                key={workspace?.id}
-              />
-            ))}
+            {data &&
+              data.myWorkspaces.map((workspace) => (
+                <WorkspaceItem
+                  workspace={{
+                    id: workspace?.id,
+                    name: workspace?.name,
+                    members: 2,
+                  }}
+                  key={workspace?.id}
+                />
+              ))}
           </div>
           <div className="flex flex-col items-center mt-12">
             <div className="text-center">

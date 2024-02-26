@@ -64,3 +64,10 @@ mutation CreateChannel($name: String!, $workspaceId: Int!) {
     name
   }
 }
+
+query Channel($id: Int!, $workspaceId: Int!) {
+  channelQuery(findChannelInput: { id: $id, workspaceId: $workspaceId }) {
+    id
+    name
+  }
+}

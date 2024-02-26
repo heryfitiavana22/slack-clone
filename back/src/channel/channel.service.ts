@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import {
   CreateChannelInput,
+  FindChannelInput,
   FindManyChannelInput,
   UpdateChannelInput,
 } from 'src/graphql';
@@ -22,8 +23,14 @@ export class ChannelService {
     return this.prisma.channel.findMany({ where: { ...channel } });
   }
 
-  findOne(id: number) {
+  findById(id: number) {
     return this.prisma.channel.findUnique({ where: { id } });
+  }
+
+  findOne(findChannelInput: FindChannelInput) {
+    return this.prisma.channel.findFirstOrThrow({
+      where: { ...findChannelInput },
+    });
   }
 
   update(id: number, updateChannelInput: UpdateChannelInput) {

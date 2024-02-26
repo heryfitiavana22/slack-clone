@@ -7,6 +7,12 @@ input FindManyChannelInput {
   workspaceId: Int
 }
 
+input FindChannelInput {
+  id: Int
+  name: String
+  workspaceId: Int
+}
+
 input CreateChannelInput {
   name: String!
   workspaceId: Int!
@@ -20,6 +26,7 @@ input UpdateChannelInput {
 type Query {
   channels(findManyChannelInput: FindManyChannelInput): [Channel]!
   channel(id: Int!): Channel
+  channelQuery(findChannelInput: FindChannelInput): Channel
 }
 
 type Mutation {

@@ -2,15 +2,29 @@ import { PropsWithChildren, useState } from 'react';
 import { ChatList } from './chat-list/chat-list';
 import { RichTextEditor } from '../components/rich-text-editor/rich-text-editor';
 import { H6 } from '../components/typography/typography';
+import { useParams } from 'react-router-dom';
+import { useChannelQuery } from 'src/graphql-request';
+import { useWorkspace } from '../workspace/use-workspace';
+import { Loading } from '../components/loading/loading';
 
 export function Channel({}: ChannelProps) {
   const [value, setValue] = useState('');
+  const { id: workspaceId } = useWorkspace();
+  const { channelId } = useParams();
+  const { data, loading, error } = useChannelQuery({
+    variables: { id: Number(channelId), workspaceId },
+  });
+
+  if (loading) return <Loading />;
+
+  if (error || !data) return <div>Canaux indisponible</div>;
+  console.log(data);
 
   return (
     <div className="grid grid-rows-[56px_1fr_auto] h-full">
       <div className="border">
         <H6>
-          # example{' '}
+          # {data.channelQuery?.name}
           <div className="bg-red-00">
             <svg
               xmlns="http://www.w3.org/2000/svg"
