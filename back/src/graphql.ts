@@ -19,8 +19,8 @@ export class FindManyChannelInput {
 
 export class FindChannelInput {
     id?: Nullable<number>;
-    workspaceId?: Nullable<number>;
     name?: Nullable<string>;
+    workspaceId?: Nullable<number>;
 }
 
 export class CreateChannelInput {
@@ -31,6 +31,21 @@ export class CreateChannelInput {
 export class UpdateChannelInput {
     id: number;
     name?: Nullable<string>;
+}
+
+export class FindChatChannelInput {
+    channelId: number;
+    page?: Nullable<number>;
+}
+
+export class CreateChatChannelInput {
+    content: string;
+    senderId: number;
+    channelId: number;
+}
+
+export class UpdateChatChannelInput {
+    id: number;
 }
 
 export class CreateUserInput {
@@ -89,6 +104,10 @@ export abstract class IQuery {
 
     abstract channelQuery(findChannelInput?: Nullable<FindChannelInput>): Nullable<Channel> | Promise<Nullable<Channel>>;
 
+    abstract chatChannels(findChatChannelInput?: Nullable<FindChatChannelInput>): Nullable<ChatChannel>[] | Promise<Nullable<ChatChannel>[]>;
+
+    abstract chatChannel(id: number): Nullable<ChatChannel> | Promise<Nullable<ChatChannel>>;
+
     abstract users(findManyUserInput?: Nullable<FindManyUserInput>): Nullable<User>[] | Promise<Nullable<User>[]>;
 
     abstract user(id: number): Nullable<User> | Promise<Nullable<User>>;
@@ -111,6 +130,12 @@ export abstract class IMutation {
 
     abstract removeChannel(id: number): Nullable<Channel> | Promise<Nullable<Channel>>;
 
+    abstract createChatChannel(createChatChannelInput: CreateChatChannelInput): ChatChannel | Promise<ChatChannel>;
+
+    abstract updateChatChannel(updateChatChannelInput: UpdateChatChannelInput): ChatChannel | Promise<ChatChannel>;
+
+    abstract removeChatChannel(id: number): Nullable<ChatChannel> | Promise<Nullable<ChatChannel>>;
+
     abstract createUser(createUserInput: CreateUserInput): User | Promise<User>;
 
     abstract updateUser(updateUserInput: UpdateUserInput): User | Promise<User>;
@@ -127,6 +152,16 @@ export abstract class IMutation {
 export class Channel {
     id: number;
     name: string;
+}
+
+export class ChatChannel {
+    id: number;
+    content: string;
+    sender: User;
+    senderId: number;
+    channelId?: Nullable<number>;
+    createdAt: string;
+    updatedAt: string;
 }
 
 export class User {

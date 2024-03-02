@@ -1,0 +1,39 @@
+type ChatChannel {
+  id: Int!
+  content: String!
+  sender: User!
+  senderId: Int!
+  channelId: Int
+  createdAt: String!
+  updatedAt: String!
+}
+
+input FindChatChannelInput {
+  channelId: Int!
+  page: Int
+}
+
+input CreateChatChannelInput {
+  content: String!
+  senderId: Int!
+  channelId: Int!
+}
+
+input UpdateChatChannelInput {
+  id: Int!
+}
+
+type Query {
+  chatChannels(findChatChannelInput: FindChatChannelInput): [ChatChannel]!
+  chatChannel(id: Int!): ChatChannel
+}
+
+type Mutation {
+  createChatChannel(
+    createChatChannelInput: CreateChatChannelInput!
+  ): ChatChannel!
+  updateChatChannel(
+    updateChatChannelInput: UpdateChatChannelInput!
+  ): ChatChannel!
+  removeChatChannel(id: Int!): ChatChannel
+}

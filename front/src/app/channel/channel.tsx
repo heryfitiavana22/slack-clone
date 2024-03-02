@@ -1,5 +1,5 @@
 import { PropsWithChildren, useState } from 'react';
-import { ChatList } from './chat-list/chat-list';
+import { ChatBox } from './chat-box/chat-box';
 import { RichTextEditor } from '../components/rich-text-editor/rich-text-editor';
 import { H6 } from '../components/typography/typography';
 import { useParams } from 'react-router-dom';
@@ -18,7 +18,6 @@ export function Channel({}: ChannelProps) {
   if (loading) return <Loading />;
 
   if (error || !data) return <div>Canaux indisponible</div>;
-  console.log(data);
 
   return (
     <div className="grid grid-rows-[56px_1fr_auto] h-full">
@@ -46,7 +45,7 @@ export function Channel({}: ChannelProps) {
         </H6>
       </div>
       <div className="overflow-auto">
-        <ChatList />
+        <ChatBox />
       </div>
       <div className="px-4">
         <RichTextEditor value={value} setValue={setValue} />

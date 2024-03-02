@@ -1,7 +1,7 @@
 import { PropsWithChildren } from 'react';
 import { ChatItem } from './components/chat-item';
 
-export function ChatList({}: ChatListProps) {
+export function ChatBox({}: ChatBoxProps) {
   return (
     <div className="py-4">
       <ul className="px-4 space-y-2">
@@ -28,4 +28,4 @@ export function ChatList({}: ChatListProps) {
   );
 }
 
-type ChatListProps = PropsWithChildren<{}>;
+type ChatBoxProps = PropsWithChildren<{}>;

@@ -9,6 +9,7 @@ import { AuthModule } from './auth/auth.module';
 import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 import { APP_GUARD } from '@nestjs/core';
 import { GqlAuthGuard } from './auth/guards/gql-auth.guard';
+import { ChatChannelModule } from './chat-channel/chat-channel.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { GqlAuthGuard } from './auth/guards/gql-auth.guard';
     WorkspaceModule,
     ChannelModule,
     AuthModule,
+    ChatChannelModule,
   ],
   providers: [
     {
