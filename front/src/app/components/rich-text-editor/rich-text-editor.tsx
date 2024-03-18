@@ -10,6 +10,7 @@ export function RichTextEditor({
   setValue,
   placeholder = 'Envoyer un messsage...',
   className,
+  onSubmit,
 }: RichTextEditorProps) {
   const [focus, setFocus] = useState(false);
 
@@ -38,7 +39,7 @@ export function RichTextEditor({
         onFocus={() => setFocus(true)}
       />
       <div className="flex justify-end w-full">
-        <Button variant="primary" size="sm">
+        <Button variant="primary" size="sm" onClick={onSubmit} disabled={value.length == 0}>
           <Send />
         </Button>
       </div>
@@ -51,4 +52,5 @@ type RichTextEditorProps = {
   setValue: (value: string) => void;
   placeholder?: string;
   className?: string;
+  onSubmit: () => void;
 };

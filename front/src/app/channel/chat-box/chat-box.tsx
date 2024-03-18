@@ -1,14 +1,24 @@
-import { PropsWithChildren } from 'react';
+import { PropsWithChildren, useEffect } from 'react';
 import { ChatItem } from './components/chat-item';
 import { useParams } from 'react-router-dom';
 import { useChatChannelQuery } from 'src/graphql-request';
 import { Loading } from 'src/app/components/loading/loading';
+import { socket } from 'src/app/socket-client';
 
 export function ChatBox({}: ChatBoxProps) {
   const { channelId } = useParams();
-  const { data, error, loading } = useChatChannelQuery({
+  const { data, error, loading, refetch } = useChatChannelQuery({
     variables: { channelId: Number(channelId) },
   });
+
+  useEffect(() => {
+    if (loading || error) return;
+    socket.emit('connected_on_channel', channelId);
+    socket.on('new_message', refetch);
+    return () => {
+      socket.off('new_message', refetch);
+    };
+  }, [loading, error]);
 
   if (loading) return <Loading />;
 

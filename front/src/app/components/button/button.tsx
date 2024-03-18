@@ -22,7 +22,7 @@ type ButtonProps = ComponentProps<'button'> & {
   size?: 'md' | 'sm';
 };
 
-const button = cva('text-white focus:ring-4 font-medium', {
+const button = cva('text-white focus:ring-4 font-medium disabled:bg-opacity-65', {
   variants: {
     intent: {
       primary: 'bg-primary-500 hover:bg-primary-600 focus:ring-primary-300',

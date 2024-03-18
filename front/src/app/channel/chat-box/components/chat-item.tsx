@@ -4,7 +4,7 @@ export function ChatItem({ text }: ChatItemProps) {
       <div className="w-10 h-10 rounded-md bg-blue-500"></div>
       <div className="flex flex-col w-full">
         <span className="font-bold">hery hery</span>
-        <span className="">{text}</span>
+        <span className="" dangerouslySetInnerHTML={{ __html: text }}></span>
       </div>
     </div>
   );

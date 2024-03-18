@@ -4,6 +4,7 @@ import {
   FindChatChannelInput,
   UpdateChatChannelInput,
 } from 'src/graphql';
+import { purify } from 'src/helpers/dom-purify';
 import { PrismaService } from 'src/prisma.service';
 
 const ROWS = 10;
@@ -11,10 +12,12 @@ const ROWS = 10;
 export class ChatChannelService {
   constructor(private prisma: PrismaService) {}
   create(createChatChannelInput: CreateChatChannelInput) {
-    const { channelId, senderId, ...chatChannel } = createChatChannelInput;
+    const { channelId, senderId, content, ...chatChannel } =
+      createChatChannelInput;
     return this.prisma.chatChannel.create({
       data: {
         ...chatChannel,
+        content: purify.sanitize(content),
         channel: { connect: { id: channelId } },
         sender: { connect: { id: senderId } },
       },
