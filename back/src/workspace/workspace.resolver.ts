@@ -17,8 +17,6 @@ export class WorkspaceResolver {
 
   @Mutation('createWorkspace')
   create(@Args('createWorkspaceInput') createWorkspaceDto: CreateWorkspaceDto) {
-    console.log(createWorkspaceDto);
-
     return this.workspaceService.create(createWorkspaceDto);
   }
 

@@ -29,11 +29,6 @@ export class ChannelResolver {
 
   @Query('channelQuery')
   findOne(@Args('findChannelInput') query: FindChannelInput) {
-    if (query.id == 0)
-      return this.channelService.findOne({
-        name: DEFAULT_CHANNEL,
-        workspaceId: query.workspaceId,
-      });
     return this.channelService.findOne(query);
   }
 

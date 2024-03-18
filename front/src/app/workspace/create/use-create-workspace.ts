@@ -25,7 +25,7 @@ export function useCreateWorkspace() {
         if (workspace.length == 0)
           return setErrorMessage('Entrer un nom pour le workspace');
         const emails = [...emailsUsers];
-        if (user) emails.push(user.email);
+        if (user) emails.push(user.email);        
 
         const response = await createWorskpace({
           variables: {

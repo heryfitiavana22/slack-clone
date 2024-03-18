@@ -20,8 +20,8 @@ export function NavLink({
       className={classNames(
         'flex items-center py-1 px-2 rounded-md group',
         {
-          'bg-secondary text-white': active,
-          'hover:bg-primary-400': !disableHover,
+          'bg-primary-400 text-white': active,
+          'hover:bg-primary-600': !disableHover,
         },
         className,
       )}

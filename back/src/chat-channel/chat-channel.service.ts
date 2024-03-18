@@ -26,6 +26,7 @@ export class ChatChannelService {
 
     return this.prisma.chatChannel.findMany({
       where: { ...where },
+      include: { sender: true },
       skip: ROWS * page,
       take: ROWS,
       orderBy: { createdAt: 'desc' },

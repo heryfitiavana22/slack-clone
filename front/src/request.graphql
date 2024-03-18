@@ -71,3 +71,12 @@ query Channel($id: Int!, $workspaceId: Int!) {
     name
   }
 }
+
+query ChatChannel($channelId: Int!, $page: Int) {
+  chatChannels(findChatChannelInput: { channelId: $channelId, page: $page }) {
+    id
+    content
+    senderId
+    sender {id,name,email}
+  }
+}

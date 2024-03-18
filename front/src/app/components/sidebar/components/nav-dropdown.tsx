@@ -10,6 +10,7 @@ export function NavDropdown({
   dropdownItems,
   addCaption = 'Ajouter',
   disableAdd = false,
+  activeChannelId,
 }: NavDropdownProps) {
   const [expanded, setExpanded] = useState(false);
 
@@ -31,7 +32,12 @@ export function NavDropdown({
         <ul className=" py-2">
           {dropdownItems.map((item, k) => (
             <li key={k}>
-              <NavLink name={item.name} href={item.href} icon={item.icon} />
+              <NavLink
+                name={item.name}
+                href={item.href}
+                icon={item.icon}
+                active={item.id == activeChannelId}
+              />
             </li>
           ))}
           {!disableAdd && (
@@ -54,9 +60,11 @@ export type NavDropdownProps = {
   dropdownItems: DropDownItem[];
   addCaption?: string;
   disableAdd?: boolean;
+  activeChannelId: number;
 };
 
 type DropDownItem = {
+  id: number;
   name: string;
   href?: string;
   icon?: React.ReactElement;

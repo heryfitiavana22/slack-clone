@@ -27,9 +27,26 @@ export type Channel = {
   name: Scalars['String']['output'];
 };
 
+export type ChatChannel = {
+  __typename?: 'ChatChannel';
+  channelId?: Maybe<Scalars['Int']['output']>;
+  content: Scalars['String']['output'];
+  createdAt: Scalars['String']['output'];
+  id: Scalars['Int']['output'];
+  sender: User;
+  senderId: Scalars['Int']['output'];
+  updatedAt: Scalars['String']['output'];
+};
+
 export type CreateChannelInput = {
   name: Scalars['String']['input'];
   workspaceId: Scalars['Int']['input'];
+};
+
+export type CreateChatChannelInput = {
+  channelId: Scalars['Int']['input'];
+  content: Scalars['String']['input'];
+  senderId: Scalars['Int']['input'];
 };
 
 export type CreateUserInput = {
@@ -45,7 +62,13 @@ export type CreateWorkspaceInput = {
 
 export type FindChannelInput = {
   id?: InputMaybe<Scalars['Int']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
   workspaceId?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type FindChatChannelInput = {
+  channelId: Scalars['Int']['input'];
+  page?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type FindManyChannelInput = {
@@ -81,13 +104,16 @@ export type LoginInput = {
 export type Mutation = {
   __typename?: 'Mutation';
   createChannel: Channel;
+  createChatChannel: ChatChannel;
   createUser: User;
   createWorkspace: Workspace;
   login: Token;
   removeChannel?: Maybe<Channel>;
+  removeChatChannel?: Maybe<ChatChannel>;
   removeUser?: Maybe<User>;
   removeWorkspace?: Maybe<Workspace>;
   updateChannel: Channel;
+  updateChatChannel: ChatChannel;
   updateUser: User;
   updateWorkspace: Workspace;
 };
@@ -95,6 +121,11 @@ export type Mutation = {
 
 export type MutationCreateChannelArgs = {
   createChannelInput: CreateChannelInput;
+};
+
+
+export type MutationCreateChatChannelArgs = {
+  createChatChannelInput: CreateChatChannelInput;
 };
 
 
@@ -118,6 +149,11 @@ export type MutationRemoveChannelArgs = {
 };
 
 
+export type MutationRemoveChatChannelArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
 export type MutationRemoveUserArgs = {
   id: Scalars['Int']['input'];
 };
@@ -130,6 +166,11 @@ export type MutationRemoveWorkspaceArgs = {
 
 export type MutationUpdateChannelArgs = {
   updateChannelInput: UpdateChannelInput;
+};
+
+
+export type MutationUpdateChatChannelArgs = {
+  updateChatChannelInput: UpdateChatChannelInput;
 };
 
 
@@ -148,6 +189,8 @@ export type Query = {
   channel?: Maybe<Channel>;
   channelQuery?: Maybe<Channel>;
   channels: Array<Maybe<Channel>>;
+  chatChannel?: Maybe<ChatChannel>;
+  chatChannels: Array<Maybe<ChatChannel>>;
   me?: Maybe<User>;
   myWorkspaces: Array<Maybe<Workspace>>;
   user?: Maybe<User>;
@@ -174,6 +217,16 @@ export type QueryChannelQueryArgs = {
 
 export type QueryChannelsArgs = {
   findManyChannelInput?: InputMaybe<FindManyChannelInput>;
+};
+
+
+export type QueryChatChannelArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryChatChannelsArgs = {
+  findChatChannelInput?: InputMaybe<FindChatChannelInput>;
 };
 
 
@@ -204,6 +257,10 @@ export type Token = {
 export type UpdateChannelInput = {
   id: Scalars['Int']['input'];
   name?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type UpdateChatChannelInput = {
+  id: Scalars['Int']['input'];
 };
 
 export type UpdateUserInput = {
@@ -297,6 +354,14 @@ export type ChannelQueryVariables = Exact<{
 
 
 export type ChannelQuery = { __typename?: 'Query', channelQuery?: { __typename?: 'Channel', id: number, name: string } | null };
+
+export type ChatChannelQueryVariables = Exact<{
+  channelId: Scalars['Int']['input'];
+  page?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+
+export type ChatChannelQuery = { __typename?: 'Query', chatChannels: Array<{ __typename?: 'ChatChannel', id: number, content: string, senderId: number, sender: { __typename?: 'User', id: number, name: string, email: string } } | null> };
 
 
 export const MeDocument = gql`
@@ -649,3 +714,51 @@ export type ChannelQueryHookResult = ReturnType<typeof useChannelQuery>;
 export type ChannelLazyQueryHookResult = ReturnType<typeof useChannelLazyQuery>;
 export type ChannelSuspenseQueryHookResult = ReturnType<typeof useChannelSuspenseQuery>;
 export type ChannelQueryResult = Apollo.QueryResult<ChannelQuery, ChannelQueryVariables>;
+export const ChatChannelDocument = gql`
+    query ChatChannel($channelId: Int!, $page: Int) {
+  chatChannels(findChatChannelInput: {channelId: $channelId, page: $page}) {
+    id
+    content
+    senderId
+    sender {
+      id
+      name
+      email
+    }
+  }
+}
+    `;
+
+/**
+ * __useChatChannelQuery__
+ *
+ * To run a query within a React component, call `useChatChannelQuery` and pass it any options that fit your needs.
+ * When your component renders, `useChatChannelQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useChatChannelQuery({
+ *   variables: {
+ *      channelId: // value for 'channelId'
+ *      page: // value for 'page'
+ *   },
+ * });
+ */
+export function useChatChannelQuery(baseOptions: Apollo.QueryHookOptions<ChatChannelQuery, ChatChannelQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ChatChannelQuery, ChatChannelQueryVariables>(ChatChannelDocument, options);
+      }
+export function useChatChannelLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ChatChannelQuery, ChatChannelQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ChatChannelQuery, ChatChannelQueryVariables>(ChatChannelDocument, options);
+        }
+export function useChatChannelSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<ChatChannelQuery, ChatChannelQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<ChatChannelQuery, ChatChannelQueryVariables>(ChatChannelDocument, options);
+        }
+export type ChatChannelQueryHookResult = ReturnType<typeof useChatChannelQuery>;
+export type ChatChannelLazyQueryHookResult = ReturnType<typeof useChatChannelLazyQuery>;
+export type ChatChannelSuspenseQueryHookResult = ReturnType<typeof useChatChannelSuspenseQuery>;
+export type ChatChannelQueryResult = Apollo.QueryResult<ChatChannelQuery, ChatChannelQueryVariables>;
