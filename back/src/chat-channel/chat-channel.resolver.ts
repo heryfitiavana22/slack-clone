@@ -2,6 +2,7 @@ import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { ChatChannelService } from './chat-channel.service';
 import {
   CreateChatChannelInput,
+  FindChatChannelGroupedInput,
   FindChatChannelInput,
   UpdateChatChannelInput,
 } from 'src/graphql';
@@ -24,6 +25,23 @@ export class ChatChannelResolver {
     query: FindChatChannelInput,
   ) {
     return this.chatChannelService.findAll(query);
+  }
+
+  @Query('chatChannelsGrouped')
+  async findChatGrouped(
+    @Args('findChatChannelGroupedInput')
+    query: FindChatChannelGroupedInput,
+  ) {
+    const seen = await this.chatChannelService.findAll({
+      ...query,
+      seen: true,
+    });
+    const notSeen = await this.chatChannelService.findAll({
+      ...query,
+      seen: false,
+    });
+
+    return { seen, notSeen };
   }
 
   @Query('chatChannel')

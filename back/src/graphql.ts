@@ -42,10 +42,12 @@ export class CreateChatChannelInput {
     content: string;
     senderId: number;
     channelId: number;
+    seenByUsersIds?: Nullable<Nullable<number>[]>;
 }
 
 export class UpdateChatChannelInput {
     id: number;
+    usersIds?: Nullable<Nullable<number>[]>;
 }
 
 export class CreateUserInput {
@@ -91,6 +93,12 @@ export class AmIInWorkspaceInput {
     workspaceId: number;
 }
 
+export class FindChatChannelGroupedInput {
+    channelId: number;
+    page?: Nullable<number>;
+    userId: number;
+}
+
 export class Token {
     access_token: string;
 }
@@ -119,6 +127,8 @@ export abstract class IQuery {
     abstract amIInWorkspace(amIInWorkspaceInput?: Nullable<AmIInWorkspaceInput>): Nullable<Workspace> | Promise<Nullable<Workspace>>;
 
     abstract myWorkspaces(): Nullable<Workspace>[] | Promise<Nullable<Workspace>[]>;
+
+    abstract chatChannelsGrouped(findChatChannelGroupedInput?: Nullable<FindChatChannelGroupedInput>): ChatChannelGrouped | Promise<ChatChannelGrouped>;
 }
 
 export abstract class IMutation {
@@ -162,6 +172,7 @@ export class ChatChannel {
     channelId?: Nullable<number>;
     createdAt: string;
     updatedAt: string;
+    seenByUsers?: Nullable<Nullable<User>[]>;
 }
 
 export class User {
@@ -179,6 +190,11 @@ export class Workspace {
 
 export class IsInWorkspace {
     is: boolean;
+}
+
+export class ChatChannelGrouped {
+    seen: Nullable<ChatChannel>[];
+    notSeen: Nullable<ChatChannel>[];
 }
 
 type Nullable<T> = T | null;

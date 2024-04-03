@@ -33,9 +33,16 @@ export type ChatChannel = {
   content: Scalars['String']['output'];
   createdAt: Scalars['String']['output'];
   id: Scalars['Int']['output'];
+  seenByUsers?: Maybe<Array<Maybe<User>>>;
   sender: User;
   senderId: Scalars['Int']['output'];
   updatedAt: Scalars['String']['output'];
+};
+
+export type ChatChannelGrouped = {
+  __typename?: 'ChatChannelGrouped';
+  notSeen: Array<Maybe<ChatChannel>>;
+  seen: Array<Maybe<ChatChannel>>;
 };
 
 export type CreateChannelInput = {
@@ -64,6 +71,12 @@ export type FindChannelInput = {
   id?: InputMaybe<Scalars['Int']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   workspaceId?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type FindChatChannelGroupedInput = {
+  channelId: Scalars['Int']['input'];
+  page?: InputMaybe<Scalars['Int']['input']>;
+  userId: Scalars['Int']['input'];
 };
 
 export type FindChatChannelInput = {
@@ -191,6 +204,7 @@ export type Query = {
   channels: Array<Maybe<Channel>>;
   chatChannel?: Maybe<ChatChannel>;
   chatChannels: Array<Maybe<ChatChannel>>;
+  chatChannelsGrouped: ChatChannelGrouped;
   me?: Maybe<User>;
   myWorkspaces: Array<Maybe<Workspace>>;
   user?: Maybe<User>;
@@ -230,6 +244,11 @@ export type QueryChatChannelsArgs = {
 };
 
 
+export type QueryChatChannelsGroupedArgs = {
+  findChatChannelGroupedInput?: InputMaybe<FindChatChannelGroupedInput>;
+};
+
+
 export type QueryUserArgs = {
   id: Scalars['Int']['input'];
 };
@@ -261,6 +280,7 @@ export type UpdateChannelInput = {
 
 export type UpdateChatChannelInput = {
   id: Scalars['Int']['input'];
+  usersIds?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
 };
 
 export type UpdateUserInput = {
@@ -361,7 +381,24 @@ export type ChatChannelQueryVariables = Exact<{
 }>;
 
 
-export type ChatChannelQuery = { __typename?: 'Query', chatChannels: Array<{ __typename?: 'ChatChannel', id: number, content: string, senderId: number, sender: { __typename?: 'User', id: number, name: string, email: string } } | null> };
+export type ChatChannelQuery = { __typename?: 'Query', chatChannels: Array<{ __typename?: 'ChatChannel', id: number, content: string, senderId: number, sender: { __typename?: 'User', id: number, name: string, email: string }, seenByUsers?: Array<{ __typename?: 'User', id: number } | null> | null } | null> };
+
+export type UpdatChatChannelMutationVariables = Exact<{
+  chatChannelId: Scalars['Int']['input'];
+  usersIds?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>> | InputMaybe<Scalars['Int']['input']>>;
+}>;
+
+
+export type UpdatChatChannelMutation = { __typename?: 'Mutation', updateChatChannel: { __typename?: 'ChatChannel', id: number, content: string } };
+
+export type ChatChannelGroupedQueryVariables = Exact<{
+  channelId: Scalars['Int']['input'];
+  userId: Scalars['Int']['input'];
+  page?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+
+export type ChatChannelGroupedQuery = { __typename?: 'Query', chatChannelsGrouped: { __typename?: 'ChatChannelGrouped', seen: Array<{ __typename?: 'ChatChannel', id: number, content: string, senderId: number, sender: { __typename?: 'User', id: number, name: string, email: string }, seenByUsers?: Array<{ __typename?: 'User', id: number } | null> | null } | null>, notSeen: Array<{ __typename?: 'ChatChannel', id: number, content: string, senderId: number, sender: { __typename?: 'User', id: number, name: string, email: string }, seenByUsers?: Array<{ __typename?: 'User', id: number } | null> | null } | null> } };
 
 
 export const MeDocument = gql`
@@ -725,6 +762,9 @@ export const ChatChannelDocument = gql`
       name
       email
     }
+    seenByUsers {
+      id
+    }
   }
 }
     `;
@@ -762,3 +802,109 @@ export type ChatChannelQueryHookResult = ReturnType<typeof useChatChannelQuery>;
 export type ChatChannelLazyQueryHookResult = ReturnType<typeof useChatChannelLazyQuery>;
 export type ChatChannelSuspenseQueryHookResult = ReturnType<typeof useChatChannelSuspenseQuery>;
 export type ChatChannelQueryResult = Apollo.QueryResult<ChatChannelQuery, ChatChannelQueryVariables>;
+export const UpdatChatChannelDocument = gql`
+    mutation UpdatChatChannel($chatChannelId: Int!, $usersIds: [Int]) {
+  updateChatChannel(
+    updateChatChannelInput: {id: $chatChannelId, usersIds: $usersIds}
+  ) {
+    id
+    content
+  }
+}
+    `;
+export type UpdatChatChannelMutationFn = Apollo.MutationFunction<UpdatChatChannelMutation, UpdatChatChannelMutationVariables>;
+
+/**
+ * __useUpdatChatChannelMutation__
+ *
+ * To run a mutation, you first call `useUpdatChatChannelMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdatChatChannelMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updatChatChannelMutation, { data, loading, error }] = useUpdatChatChannelMutation({
+ *   variables: {
+ *      chatChannelId: // value for 'chatChannelId'
+ *      usersIds: // value for 'usersIds'
+ *   },
+ * });
+ */
+export function useUpdatChatChannelMutation(baseOptions?: Apollo.MutationHookOptions<UpdatChatChannelMutation, UpdatChatChannelMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdatChatChannelMutation, UpdatChatChannelMutationVariables>(UpdatChatChannelDocument, options);
+      }
+export type UpdatChatChannelMutationHookResult = ReturnType<typeof useUpdatChatChannelMutation>;
+export type UpdatChatChannelMutationResult = Apollo.MutationResult<UpdatChatChannelMutation>;
+export type UpdatChatChannelMutationOptions = Apollo.BaseMutationOptions<UpdatChatChannelMutation, UpdatChatChannelMutationVariables>;
+export const ChatChannelGroupedDocument = gql`
+    query ChatChannelGrouped($channelId: Int!, $userId: Int!, $page: Int) {
+  chatChannelsGrouped(
+    findChatChannelGroupedInput: {channelId: $channelId, page: $page, userId: $userId}
+  ) {
+    seen {
+      id
+      content
+      senderId
+      sender {
+        id
+        name
+        email
+      }
+      seenByUsers {
+        id
+      }
+    }
+    notSeen {
+      id
+      content
+      senderId
+      sender {
+        id
+        name
+        email
+      }
+      seenByUsers {
+        id
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useChatChannelGroupedQuery__
+ *
+ * To run a query within a React component, call `useChatChannelGroupedQuery` and pass it any options that fit your needs.
+ * When your component renders, `useChatChannelGroupedQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useChatChannelGroupedQuery({
+ *   variables: {
+ *      channelId: // value for 'channelId'
+ *      userId: // value for 'userId'
+ *      page: // value for 'page'
+ *   },
+ * });
+ */
+export function useChatChannelGroupedQuery(baseOptions: Apollo.QueryHookOptions<ChatChannelGroupedQuery, ChatChannelGroupedQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ChatChannelGroupedQuery, ChatChannelGroupedQueryVariables>(ChatChannelGroupedDocument, options);
+      }
+export function useChatChannelGroupedLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ChatChannelGroupedQuery, ChatChannelGroupedQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ChatChannelGroupedQuery, ChatChannelGroupedQueryVariables>(ChatChannelGroupedDocument, options);
+        }
+export function useChatChannelGroupedSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<ChatChannelGroupedQuery, ChatChannelGroupedQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<ChatChannelGroupedQuery, ChatChannelGroupedQueryVariables>(ChatChannelGroupedDocument, options);
+        }
+export type ChatChannelGroupedQueryHookResult = ReturnType<typeof useChatChannelGroupedQuery>;
+export type ChatChannelGroupedLazyQueryHookResult = ReturnType<typeof useChatChannelGroupedLazyQuery>;
+export type ChatChannelGroupedSuspenseQueryHookResult = ReturnType<typeof useChatChannelGroupedSuspenseQuery>;
+export type ChatChannelGroupedQueryResult = Apollo.QueryResult<ChatChannelGroupedQuery, ChatChannelGroupedQueryVariables>;

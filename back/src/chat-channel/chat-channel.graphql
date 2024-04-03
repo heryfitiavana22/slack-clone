@@ -6,6 +6,12 @@ type ChatChannel {
   channelId: Int
   createdAt: String!
   updatedAt: String!
+  seenByUsers: [User]
+}
+
+type ChatChannelGrouped {
+  seen: [ChatChannel]!
+  notSeen: [ChatChannel]!
 }
 
 input FindChatChannelInput {
@@ -13,18 +19,29 @@ input FindChatChannelInput {
   page: Int
 }
 
+input FindChatChannelGroupedInput {
+  channelId: Int!
+  page: Int
+  userId: Int!
+}
+
 input CreateChatChannelInput {
   content: String!
   senderId: Int!
   channelId: Int!
+  seenByUsersIds: [Int]
 }
 
 input UpdateChatChannelInput {
   id: Int!
+  usersIds: [Int]
 }
 
 type Query {
   chatChannels(findChatChannelInput: FindChatChannelInput): [ChatChannel]!
+  chatChannelsGrouped(
+    findChatChannelGroupedInput: FindChatChannelGroupedInput
+  ): ChatChannelGrouped!
   chatChannel(id: Int!): ChatChannel
 }
 

@@ -36,9 +36,12 @@ export class ChatChannelGateway {
     @ConnectedSocket() socket: Socket,
     @MessageBody() message: NewMessage,
   ) {
-    await this.chatChannelService.create(message);
+    const newMessage = await this.chatChannelService.create({
+      ...message,
+      seenByUsersIds: [message.senderId],
+    });
     this.server
       .to(channelIdRoom(message.channelId))
-      .emit('new_message', message);
+      .emit('new_message', newMessage);
   }
 }

@@ -15,9 +15,10 @@ model User {
   workspaces       Workspace[]
   createdAt        DateTime      @default(now())
   updatedAt        DateTime      @updatedAt
-  chatChannel      ChatChannel[]
+  chatChannel      ChatChannel[] @relation("sendChatChannel")
   sentMessages     ChatPrivate[] @relation("SentMessages")
   receivedMessages ChatPrivate[] @relation("ReceivedMessages")
+  ChatChannel      ChatChannel[] @relation("seenChatChannel")
 }
 
 model Workspace {
@@ -42,14 +43,15 @@ model Channel {
 }
 
 model ChatChannel {
-  id        Int      @id @default(autoincrement())
-  content   String
-  sender    User     @relation(fields: [senderId], references: [id])
-  senderId  Int
-  channel   Channel  @relation(fields: [channelId], references: [id])
-  channelId Int
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          Int      @id @default(autoincrement())
+  content     String
+  sender      User     @relation("sendChatChannel", fields: [senderId], references: [id])
+  senderId    Int
+  channel     Channel  @relation(fields: [channelId], references: [id])
+  channelId   Int
+  seenByUsers User[]   @relation("seenChatChannel")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 model ChatPrivate {

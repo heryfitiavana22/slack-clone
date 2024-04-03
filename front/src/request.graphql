@@ -77,6 +77,59 @@ query ChatChannel($channelId: Int!, $page: Int) {
     id
     content
     senderId
-    sender {id,name,email}
+    sender {
+      id
+      name
+      email
+    }
+    seenByUsers {
+      id
+    }
+  }
+}
+
+mutation UpdatChatChannel($chatChannelId: Int!, $usersIds: [Int]) {
+  updateChatChannel(
+    updateChatChannelInput: { id: $chatChannelId, usersIds: $usersIds }
+  ) {
+    id
+    content
+  }
+}
+
+query ChatChannelGrouped($channelId: Int!, $userId: Int!, $page: Int) {
+  chatChannelsGrouped(
+    findChatChannelGroupedInput: {
+      channelId: $channelId
+      page: $page
+      userId: $userId
+    }
+  ) {
+    seen {
+      id
+      content
+      senderId
+      sender {
+        id
+        name
+        email
+      }
+      seenByUsers {
+        id
+      }
+    }
+    notSeen {
+      id
+      content
+      senderId
+      sender {
+        id
+        name
+        email
+      }
+      seenByUsers {
+        id
+      }
+    }
   }
 }
