@@ -1,10 +1,10 @@
 import { PropsWithChildren } from 'react';
-import { NavDropdown } from './nav-dropdown';
+import { DropDownItem, NavDropdown } from './nav-dropdown';
 
 export function ChatList({}: ChatListProps) {
-  const dropdownItems = [
-    { name: 'hery hery', href: '#' },
-    { name: 'go-max', href: '#' },
+  const dropdownItems: DropDownItem[] = [
+    { id: 1, name: 'hery hery', href: '#' },
+    { id: 2, name: 'go-max', href: '#' },
   ];
 
   return (
@@ -13,6 +13,7 @@ export function ChatList({}: ChatListProps) {
         name={'Message'}
         dropdownItems={dropdownItems}
         addCaption={'Ajouter des collègues'}
+        activeChannelId={null}
       />
     </li>
   );

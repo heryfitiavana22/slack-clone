@@ -60,10 +60,10 @@ export type NavDropdownProps = {
   dropdownItems: DropDownItem[];
   addCaption?: string;
   disableAdd?: boolean;
-  activeChannelId: number;
+  activeChannelId: number | null;
 };
 
-type DropDownItem = {
+export type DropDownItem = {
   id: number;
   name: string;
   href?: string;
