@@ -38,6 +38,12 @@ export class FindChatChannelInput {
     page?: Nullable<number>;
 }
 
+export class FindChatChannelGroupedInput {
+    channelId: number;
+    page?: Nullable<number>;
+    userId: number;
+}
+
 export class CreateChatChannelInput {
     content: string;
     senderId: number;
@@ -93,12 +99,6 @@ export class AmIInWorkspaceInput {
     workspaceId: number;
 }
 
-export class FindChatChannelGroupedInput {
-    channelId: number;
-    page?: Nullable<number>;
-    userId: number;
-}
-
 export class Token {
     access_token: string;
 }
@@ -114,6 +114,8 @@ export abstract class IQuery {
 
     abstract chatChannels(findChatChannelInput?: Nullable<FindChatChannelInput>): Nullable<ChatChannel>[] | Promise<Nullable<ChatChannel>[]>;
 
+    abstract chatChannelsGrouped(findChatChannelGroupedInput?: Nullable<FindChatChannelGroupedInput>): ChatChannelGrouped | Promise<ChatChannelGrouped>;
+
     abstract chatChannel(id: number): Nullable<ChatChannel> | Promise<Nullable<ChatChannel>>;
 
     abstract users(findManyUserInput?: Nullable<FindManyUserInput>): Nullable<User>[] | Promise<Nullable<User>[]>;
@@ -127,8 +129,6 @@ export abstract class IQuery {
     abstract amIInWorkspace(amIInWorkspaceInput?: Nullable<AmIInWorkspaceInput>): Nullable<Workspace> | Promise<Nullable<Workspace>>;
 
     abstract myWorkspaces(): Nullable<Workspace>[] | Promise<Nullable<Workspace>[]>;
-
-    abstract chatChannelsGrouped(findChatChannelGroupedInput?: Nullable<FindChatChannelGroupedInput>): ChatChannelGrouped | Promise<ChatChannelGrouped>;
 }
 
 export abstract class IMutation {
@@ -175,6 +175,11 @@ export class ChatChannel {
     seenByUsers?: Nullable<Nullable<User>[]>;
 }
 
+export class ChatChannelGrouped {
+    seen: Nullable<ChatChannel>[];
+    notSeen: Nullable<ChatChannel>[];
+}
+
 export class User {
     id: number;
     name: string;
@@ -190,11 +195,6 @@ export class Workspace {
 
 export class IsInWorkspace {
     is: boolean;
-}
-
-export class ChatChannelGrouped {
-    seen: Nullable<ChatChannel>[];
-    notSeen: Nullable<ChatChannel>[];
 }
 
 type Nullable<T> = T | null;

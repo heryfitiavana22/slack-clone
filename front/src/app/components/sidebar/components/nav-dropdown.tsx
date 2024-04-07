@@ -11,8 +11,9 @@ export function NavDropdown({
   addCaption = 'Ajouter',
   disableAdd = false,
   activeChannelId,
+  onClickAdd,
 }: NavDropdownProps) {
-  const [expanded, setExpanded] = useState(false);
+  const [expanded, setExpanded] = useState(true);
 
   return (
     <>
@@ -46,6 +47,7 @@ export function NavDropdown({
                 name={addCaption}
                 icon={<Plus className="bg-primary-400 rounded-md" />}
                 disableHover
+                onClick={onClickAdd}
               />
             </li>
           )}
@@ -61,6 +63,7 @@ export type NavDropdownProps = {
   addCaption?: string;
   disableAdd?: boolean;
   activeChannelId: number | null;
+  onClickAdd?: () => void;
 };
 
 export type DropDownItem = {

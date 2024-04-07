@@ -39,7 +39,12 @@ export function RichTextEditor({
         onFocus={() => setFocus(true)}
       />
       <div className="flex justify-end w-full">
-        <Button variant="primary" size="sm" onClick={onSubmit} disabled={value.length == 0}>
+        <Button
+          variant="primary"
+          size="sm"
+          onClick={onSubmit}
+          disabled={value.length == 0 || value == '<p><br></p>'}
+        >
           <Send />
         </Button>
       </div>

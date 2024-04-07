@@ -58,8 +58,8 @@ export function ChatBox({ channelName }: ChatBoxProps) {
   return (
     <div className="py-4 h-full">
       <ul className="px-4 space-y-2 flex flex-col-reverse h-full overflow-auto">
-        {data?.chatChannelsGrouped.notSeen?.map((message) => (
-          <li>
+        {data?.chatChannelsGrouped.notSeen?.map((message, k) => (
+          <li key={k}>
             <ChatItem key={message?.id} text={message?.content || ''} />
           </li>
         ))}
@@ -71,8 +71,8 @@ export function ChatBox({ channelName }: ChatBoxProps) {
             </div>
           </li>
         )}
-        {data?.chatChannelsGrouped.seen?.map((message) => (
-          <li>
+        {data?.chatChannelsGrouped.seen?.map((message, k) => (
+          <li key={k}>
             <ChatItem key={message?.id} text={message?.content || ''} />
           </li>
         ))}
