@@ -6,6 +6,7 @@ This project aims to develop a Slack clone.
 
 ## Features
 
+- [x] Workspace.
 - [x] Channels : creation, real-time messaging.
 - [x] User authentication and authorization.
 - [ ] Direct Message : real-time messaging.
