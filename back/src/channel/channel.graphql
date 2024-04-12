@@ -1,16 +1,20 @@
 type Channel {
   id: Int!
   name: String!
+  hasUnRead: Boolean
 }
 
 input FindManyChannelInput {
   workspaceId: Int
+  userId: Int
+  hasUnRead: Boolean
 }
 
 input FindChannelInput {
   id: Int
   name: String
   workspaceId: Int
+  userId: Int
 }
 
 input CreateChannelInput {

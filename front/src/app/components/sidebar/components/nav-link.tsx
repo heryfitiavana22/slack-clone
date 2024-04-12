@@ -10,6 +10,7 @@ export function NavLink({
   href = '#',
   className,
   disableHover = false,
+  hasUnRead = false,
   children,
   ref,
   ...props
@@ -29,6 +30,9 @@ export function NavLink({
     >
       {icon}
       <span className="ms-3">{name}</span>
+      {hasUnRead && (
+        <span className="relative bottom-1 block w-2 h-2 bg-secondary rounded-full"></span>
+      )}
     </Link>
   );
 }
@@ -39,4 +43,5 @@ type NavLinkProps = ComponentProps<'a'> & {
   href?: string;
   icon?: React.ReactElement;
   disableHover?: boolean;
+  hasUnRead?: boolean;
 };

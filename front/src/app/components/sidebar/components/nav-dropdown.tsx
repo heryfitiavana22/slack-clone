@@ -38,6 +38,7 @@ export function NavDropdown({
                 href={item.href}
                 icon={item.icon}
                 active={item.id == activeChannelId}
+                hasUnRead={item.hasUnRead}
               />
             </li>
           ))}
@@ -71,4 +72,5 @@ export type DropDownItem = {
   name: string;
   href?: string;
   icon?: React.ReactElement;
+  hasUnRead?: boolean
 };

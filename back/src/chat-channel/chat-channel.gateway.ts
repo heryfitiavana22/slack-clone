@@ -27,9 +27,18 @@ export class ChatChannelGateway {
   connectToChannel(
     @ConnectedSocket() socket: Socket,
     @MessageBody() channelId: string,
-  ) {
+  ) {    
     socket.join(channelIdRoom(channelId));
   }
+
+  @SubscribeMessage('disconnected_on_channel')
+  disconnectToChannel(
+    @ConnectedSocket() socket: Socket,
+    @MessageBody() channelId: string,
+  ) {    
+    socket.leave(channelIdRoom(channelId));
+  }
+
 
   @SubscribeMessage('new_message')
   async newMessage(
@@ -43,5 +52,13 @@ export class ChatChannelGateway {
     this.server
       .to(channelIdRoom(message.channelId))
       .emit('new_message', newMessage);
+    this.server
+      .to(channelIdRoom(message.channelId))
+      .emit('refetch_chatchannel_unread');
+  }
+
+  @SubscribeMessage('chatchannel_read')
+  onChatRead(@MessageBody() channelId: string) {
+    this.server.to(channelIdRoom(channelId)).emit('refetch_chatchannel_unread');
   }
 }

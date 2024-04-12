@@ -7,7 +7,7 @@ import { useWorkspace } from 'src/app/workspace/use-workspace';
 export function WorkspaceGuard({ children }: WorkspaceGuardProps) {
   const match = useMatch('/workspace/:id/*');
   const workspaceId = Number(match?.params.id) || 1;
-  const { setWorkspace } = useWorkspace();
+  const { id, setWorkspace } = useWorkspace();
   const { data, loading, error } = useAmIInWorkspaceQuery({
     variables: { workspaceId },
   });
@@ -16,7 +16,7 @@ export function WorkspaceGuard({ children }: WorkspaceGuardProps) {
     if (data && data.amIInWorkspace) setWorkspace(data.amIInWorkspace);
   }, [data]);
 
-  if (loading) return <Loading />;
+  if (loading || id == 0) return <Loading />;
 
   if (error) return <div>Workspace indisponible</div>;
 

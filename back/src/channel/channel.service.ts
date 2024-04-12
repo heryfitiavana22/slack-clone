@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import {
   CreateChannelInput,
   FindChannelInput,
@@ -18,9 +18,28 @@ export class ChannelService {
     });
   }
 
-  findAll(input?: FindManyChannelInput) {
-    const { ...channel } = input ?? {};
+   findAll(input?: FindManyChannelInput) {
+    const { userId, hasUnRead, ...channel } = input ?? {};
     return this.prisma.channel.findMany({ where: { ...channel } });
+  }
+
+  async findAllWithHasUnRead(input?: FindManyChannelInput) {
+    const { userId, hasUnRead, ...channel } = input ?? {};
+    if (!userId)
+      throw new HttpException('Must have userId', HttpStatus.BAD_REQUEST);
+    const channels = await this.prisma.channel.findMany({
+      where: { ...channel },
+      include: {
+        ChatChannel: {
+          where: {
+            NOT: {
+              seenByUsers: { some: { id: userId } },
+            },
+          },
+        },
+      },
+    });
+    return channels.map(ch => ({...ch, hasUnRead: ch.ChatChannel.length > 0}))
   }
 
   findById(id: number) {

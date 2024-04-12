@@ -15,12 +15,15 @@ export class LoginInput {
 
 export class FindManyChannelInput {
     workspaceId?: Nullable<number>;
+    userId?: Nullable<number>;
+    hasUnRead?: Nullable<boolean>;
 }
 
 export class FindChannelInput {
     id?: Nullable<number>;
     name?: Nullable<string>;
     workspaceId?: Nullable<number>;
+    userId?: Nullable<number>;
 }
 
 export class CreateChannelInput {
@@ -162,6 +165,7 @@ export abstract class IMutation {
 export class Channel {
     id: number;
     name: string;
+    hasUnRead?: Nullable<boolean>;
 }
 
 export class ChatChannel {

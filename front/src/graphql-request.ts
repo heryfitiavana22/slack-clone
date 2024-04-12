@@ -23,6 +23,7 @@ export type AmIInWorkspaceInput = {
 
 export type Channel = {
   __typename?: 'Channel';
+  hasUnRead?: Maybe<Scalars['Boolean']['output']>;
   id: Scalars['Int']['output'];
   name: Scalars['String']['output'];
 };
@@ -53,6 +54,7 @@ export type CreateChannelInput = {
 export type CreateChatChannelInput = {
   channelId: Scalars['Int']['input'];
   content: Scalars['String']['input'];
+  seenByUsersIds?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
   senderId: Scalars['Int']['input'];
 };
 
@@ -70,6 +72,7 @@ export type CreateWorkspaceInput = {
 export type FindChannelInput = {
   id?: InputMaybe<Scalars['Int']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
+  userId?: InputMaybe<Scalars['Int']['input']>;
   workspaceId?: InputMaybe<Scalars['Int']['input']>;
 };
 
@@ -85,6 +88,8 @@ export type FindChatChannelInput = {
 };
 
 export type FindManyChannelInput = {
+  hasUnRead?: InputMaybe<Scalars['Boolean']['input']>;
+  userId?: InputMaybe<Scalars['Int']['input']>;
   workspaceId?: InputMaybe<Scalars['Int']['input']>;
 };
 
@@ -354,10 +359,12 @@ export type MyWorkspacesQuery = { __typename?: 'Query', myWorkspaces: Array<{ __
 
 export type ChannelsQueryVariables = Exact<{
   workspaceId?: InputMaybe<Scalars['Int']['input']>;
+  hasUnRead?: InputMaybe<Scalars['Boolean']['input']>;
+  userId?: InputMaybe<Scalars['Int']['input']>;
 }>;
 
 
-export type ChannelsQuery = { __typename?: 'Query', channels: Array<{ __typename?: 'Channel', id: number, name: string } | null> };
+export type ChannelsQuery = { __typename?: 'Query', channels: Array<{ __typename?: 'Channel', id: number, name: string, hasUnRead?: boolean | null } | null> };
 
 export type CreateChannelMutationVariables = Exact<{
   name: Scalars['String']['input'];
@@ -634,10 +641,13 @@ export type MyWorkspacesLazyQueryHookResult = ReturnType<typeof useMyWorkspacesL
 export type MyWorkspacesSuspenseQueryHookResult = ReturnType<typeof useMyWorkspacesSuspenseQuery>;
 export type MyWorkspacesQueryResult = Apollo.QueryResult<MyWorkspacesQuery, MyWorkspacesQueryVariables>;
 export const ChannelsDocument = gql`
-    query Channels($workspaceId: Int) {
-  channels(findManyChannelInput: {workspaceId: $workspaceId}) {
+    query Channels($workspaceId: Int, $hasUnRead: Boolean, $userId: Int) {
+  channels(
+    findManyChannelInput: {workspaceId: $workspaceId, hasUnRead: $hasUnRead, userId: $userId}
+  ) {
     id
     name
+    hasUnRead
   }
 }
     `;
@@ -655,6 +665,8 @@ export const ChannelsDocument = gql`
  * const { data, loading, error } = useChannelsQuery({
  *   variables: {
  *      workspaceId: // value for 'workspaceId'
+ *      hasUnRead: // value for 'hasUnRead'
+ *      userId: // value for 'userId'
  *   },
  * });
  */

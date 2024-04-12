@@ -20,29 +20,22 @@ export function ChatBox({ channelName }: ChatBoxProps) {
   const [updateChatChannel, {}] = useUpdatChatChannelMutation();
 
   useEffect(() => {
-    socket.emit('connected_on_channel', channelId);
-  }, []);
-
-  useEffect(() => {
     data?.chatChannelsGrouped.notSeen.forEach(async (chat) => {
       if (!chat) return;
       const isSeen = chat.seenByUsers?.find((el) => el?.id == user?.id);
-      if (!isSeen)
+      if (!isSeen) {
         await updateChatChannel({
           variables: {
             chatChannelId: chat.id,
             usersIds: user ? [user.id] : [],
           },
         });
+        socket.emit('chatchannel_read', channelId);
+      }
     });
     const onNewMessage = async (message: ChatChannel) => {
       refetch();
-      await updateChatChannel({
-        variables: {
-          chatChannelId: message.id,
-          usersIds: user ? [user.id] : [],
-        },
-      });
+      console.log(message);
     };
     socket.on('new_message', onNewMessage);
     return () => {

@@ -49,10 +49,11 @@ query MyWorkspaces {
   }
 }
 
-query Channels($workspaceId: Int) {
-  channels(findManyChannelInput: { workspaceId: $workspaceId }) {
+query Channels($workspaceId: Int, $hasUnRead: Boolean, $userId: Int) {
+  channels(findManyChannelInput: { workspaceId: $workspaceId, hasUnRead: $hasUnRead, userId: $userId }) {
     id
     name
+    hasUnRead
   }
 }
 

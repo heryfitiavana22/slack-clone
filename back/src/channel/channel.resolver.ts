@@ -19,6 +19,7 @@ export class ChannelResolver {
 
   @Query('channels')
   findAll(@Args('findManyChannelInput') query: FindManyChannelInput) {
+    if(query.hasUnRead) return this.channelService.findAllWithHasUnRead(query);
     return this.channelService.findAll(query);
   }
 
